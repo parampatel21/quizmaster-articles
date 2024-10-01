@@ -10,9 +10,10 @@ import Bold from "@tiptap/extension-bold";
 import Underline from "@tiptap/extension-underline";
 import Italic from "@tiptap/extension-italic";
 import Strike from "@tiptap/extension-strike";
-import Code from "@tiptap/extension-code";
+import Code from '@tiptap/extension-code-block'
+import Heading from "@tiptap/extension-heading";  // Import the Heading extension
 import History from "@tiptap/extension-history";
-import Dropcursor from "@tiptap/extension-dropcursor"; // Import Dropcursor
+import Dropcursor from "@tiptap/extension-dropcursor"; 
 import content from "./content";
 import * as Icons from "./Icons"
 
@@ -24,16 +25,17 @@ export function BasicEditor() {
       Paragraph,
       Text,
       Link.configure({
-        openOnClick: false
+        openOnClick: false,
       }),
       Bold,
       Underline,
       Italic,
       Strike,
       Code,
-      Dropcursor.configure({ color: 'black', width: 2 }),
+      Dropcursor.configure({ color: "black", width: 2 }),
+      Heading.configure({ levels: [1, 2, 3] }), // Make sure to add Heading and configure levels
     ],
-    content
+    content,
   }) as Editor;
 
   const toggleBold = useCallback(() => {
@@ -53,7 +55,15 @@ export function BasicEditor() {
   }, [editor]);
 
   const toggleCode = useCallback(() => {
-    editor.chain().focus().toggleCode().run();
+    editor.chain().focus().toggleCodeBlock().run();
+  }, [editor]);
+
+  const toggleH1 = useCallback(() => {
+    editor.chain().focus().toggleHeading({ level: 1 }).run();
+  }, [editor]);
+
+  const toggleH2 = useCallback(() => {
+    editor.chain().focus().toggleHeading({ level: 2 }).run();
   }, [editor]);
 
   if (!editor) {
@@ -71,6 +81,7 @@ export function BasicEditor() {
           return from !== to;
         }}
       >
+        {/* Bold Button */}
         <button
           className={classNames("menu-button", {
             "is-active": editor.isActive("bold")
@@ -79,6 +90,8 @@ export function BasicEditor() {
         >
           <Icons.Bold />
         </button>
+        
+        {/* Underline Button */}
         <button
           className={classNames("menu-button", {
             "is-active": editor.isActive("underline")
@@ -87,6 +100,8 @@ export function BasicEditor() {
         >
           <Icons.Underline />
         </button>
+        
+        {/* Italic Button */}
         <button
           className={classNames("menu-button", {
             "is-active": editor.isActive("italic")
@@ -95,6 +110,8 @@ export function BasicEditor() {
         >
           <Icons.Italic />
         </button>
+        
+        {/* Strike Button */}
         <button
           className={classNames("menu-button", {
             "is-active": editor.isActive("strike")
@@ -103,6 +120,8 @@ export function BasicEditor() {
         >
           <Icons.Strikethrough />
         </button>
+        
+        {/* Code Button */}
         <button
           className={classNames("menu-button", {
             "is-active": editor.isActive("code")
@@ -110,6 +129,26 @@ export function BasicEditor() {
           onClick={toggleCode}
         >
           <Icons.Code />
+        </button>
+
+        {/* H1 Button */}
+        <button
+          className={classNames("menu-button", {
+            "is-active": editor.isActive("heading", { level: 1 })
+          })}
+          onClick={toggleH1}
+        >
+          H1
+        </button>
+
+        {/* H2 Button */}
+        <button
+          className={classNames("menu-button", {
+            "is-active": editor.isActive("heading", { level: 2 })
+          })}
+          onClick={toggleH2}
+        >
+          H2
         </button>
       </BubbleMenu>
 

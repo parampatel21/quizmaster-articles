@@ -322,7 +322,7 @@ code {
 }
 
 h1 {
-  font-size: 2rem; /* Adjust the size as you need */
+  font-size: 3rem; /* Adjust the size as you need */
   margin-top: 1.5rem;
   margin-bottom: 1rem;
   line-height: 1.2;
@@ -356,4 +356,20 @@ h3 {
 
 .ProseMirror p {
   margin: 0.5rem 0;
+}
+
+.command-list {
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+}
+
+.command-item {
+  padding: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.command-item:hover {
+  background-color: #f0f0f0; /* Highlight color on hover */
 }

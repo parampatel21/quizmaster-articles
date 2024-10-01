@@ -16,6 +16,7 @@ import History from "@tiptap/extension-history";
 import Dropcursor from "@tiptap/extension-dropcursor"; 
 import content from "./content";
 import * as Icons from "./Icons"
+import CommandsPlugin from "./CommandsPlugin";
 
 export function BasicEditor() {
   const editor = useEditor({
@@ -31,6 +32,7 @@ export function BasicEditor() {
       Underline,
       Italic,
       Strike,
+      CommandsPlugin,
       Code,
       Dropcursor.configure({ color: "black", width: 2 }),
       Heading.configure({ levels: [1, 2, 3] }), // Make sure to add Heading and configure levels

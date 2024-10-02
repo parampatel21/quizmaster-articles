@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* THE BELOW STYLES ARE STRICTLY JUST FOR TIPTAP */
+/* REST OF STYLES ARE IN-COMPONENT */
+
+/* No outline on the TipTap box */
+.ProseMirror-focused {
+  outline: none;
+}
+
+.tiptap {
+  /* Little gap up top. */
+  :first-child {
+    margin-top: 0;
+  }
+
+  /* TODO: come back and check if its necessary */
+  img {
+    display: block;
+    height: auto;
+    margin: 1.5rem 0;
+    max-width: 100%;
+
+    &.ProseMirror-selectednode {
+      outline: 3px solid var(--purple);
+    }
+  }
+
+  /* Was bored and decided to make code block look pretty. */
+  pre {
+    background: #1f2937;
+    border-radius: 0.375rem;
+    color: #d1d5db;
+    font-family: "JetBrainsMono", monospace;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    overflow-x: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  code {
+    background: none;
+    color: inherit;
+    font-size: 0.875rem;
+    padding: 0;
+    white-space: pre-wrap;
+    line-height: 1.5;
+  }
+
+  /* TODO: come back and check what's really relevant here */
+  img {
+    display: block;
+    height: auto;
+    margin: 1.5rem 0;
+    max-width: 100%;
+
+    &.ProseMirror-selectednode {
+      outline: 3px solid var(--purple);
+    }
+  }
+}
+
+/* Decided to just manually set the header sizes for less of a headache here. */
+
+h1 {
+  font-size: 3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  font-weight: bold;
+}

@@ -25,7 +25,7 @@ const FormatButton: React.FC<ButtonProps> = ({
     className={`flex justify-center items-center w-8 h-8 p-0 rounded transition-colors duration-150 ${
       isActive || (isSelected && format !== "toggleHeading") // Disable highlight for H1/H2
         ? "bg-blue-500 text-white"
-        : "hover:bg-gray-700 text-gray-300"
+        : "hover:bg-gray-600 text-gray-300"
     }`}
     onClick={onClick}
   >

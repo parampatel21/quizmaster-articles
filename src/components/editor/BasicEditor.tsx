@@ -14,7 +14,7 @@ import Heading from "@tiptap/extension-heading";
 import History from "@tiptap/extension-history";
 import Dropcursor from "@tiptap/extension-dropcursor";
 import * as Icons from "../ui/Icons";
-import CommandsPlugin from "../../extensions/commands/CommandsPlugin";
+import CommandsPlugin from "../extensions/commands/CommandsPlugin";
 import BubbleMenu from "./BubbleMenu"; // Import the BubbleMenu component
 import { FormatCommand } from "@/types";
 

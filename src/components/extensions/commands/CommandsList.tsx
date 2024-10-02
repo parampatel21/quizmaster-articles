@@ -2,6 +2,7 @@ import React from "react";
 
 interface CommandItem {
   title: string;
+  icon: JSX.Element; // Add the icon property here
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   command: (props: { editor: any; range: any }) => void;
 }
@@ -13,14 +14,15 @@ interface Props {
 
 const CommandsList: React.FC<Props> = ({ items, command }) => {
   return (
-    <div className="flex flex-col bg-gray-100 dark:bg-gray-800 rounded-md p-2 shadow-lg">
+    <div className="flex flex-col bg-gray-700 text-white rounded-md p-2 shadow-lg">
       {items.map((item, index) => (
         <button
           key={index}
-          className="px-4 py-2 text-left text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors duration-150"
+          className="flex items-center gap-2 px-2 pr-10 py-1 my-0.5 text-left rounded transition-colors duration-150 hover:bg-gray-600"
           onClick={() => command(item)}
         >
-          {item.title}
+          <span className="text-xs">{item.icon}</span>
+          <span className="text-xs">{item.title}</span>{" "}
         </button>
       ))}
     </div>

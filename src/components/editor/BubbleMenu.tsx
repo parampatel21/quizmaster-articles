@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BubbleMenu as TipTapBubbleMenu, Editor } from "@tiptap/react";
-import { FormatCommand } from "@/types"; // Adjust the import path if necessary
+import { FormatCommand } from "@/types";
 
 type ButtonProps = {
   name: string;

@@ -6,12 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "ts-node server/server.mjs"
   },
   "dependencies": {
+    "@hocuspocus/extension-sqlite": "^2.13.6",
+    "@hocuspocus/provider": "^2.13.6",
+    "@hocuspocus/server": "^2.13.6",
     "@tiptap/core": "^2.8.0",
     "@tiptap/extension-bold": "^2.8.0",
     "@tiptap/extension-code-block": "^2.8.0",
+    "@tiptap/extension-collaboration": "^2.8.0",
+    "@tiptap/extension-collaboration-cursor": "^2.8.0",
     "@tiptap/extension-document": "^2.8.0",
     "@tiptap/extension-dropcursor": "^2.8.0",
     "@tiptap/extension-heading": "^2.8.0",
@@ -25,14 +31,20 @@
     "@tiptap/extension-underline": "^2.8.0",
     "@tiptap/pm": "^2.8.0",
     "@tiptap/react": "^2.8.0",
+    "@tiptap/starter-kit": "^2.8.0",
     "@tiptap/suggestion": "^2.8.0",
     "lucide-react": "^0.447.0",
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
-    "tippy.js": "^6.3.7"
+    "sqlite3": "^5.1.7",
+    "tippy.js": "^6.3.7",
+    "y-prosemirror": "^1.2.12",
+    "y-websocket": "^2.0.4",
+    "yjs": "^13.6.19"
   },
   "devDependencies": {
+    "@types/node": "22.7.4",
     "@types/react": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",

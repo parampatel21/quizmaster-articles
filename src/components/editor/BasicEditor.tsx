@@ -18,6 +18,19 @@ import CommandsPlugin from "../extensions/commands/CommandsPlugin";
 import BubbleMenu from "./BubbleMenu"; // Import the BubbleMenu component
 import { FormatCommand } from "@/types";
 import Highlight from "@tiptap/extension-highlight"; // Import Highlight extension
+import * as Y from "yjs";
+import { HocuspocusProvider } from "@hocuspocus/provider";
+import Collaboration from "@tiptap/extension-collaboration";
+import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
+
+const ydoc = new Y.Doc();
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const provider = new HocuspocusProvider({
+  url: "ws://127.0.0.1",
+  name: "document",
+  document: ydoc,
+});
 
 export function BasicEditor() {
   const editor = useEditor({
@@ -36,9 +49,14 @@ export function BasicEditor() {
       Dropcursor.configure({ color: "black", width: 2 }),
       Heading.configure({ levels: [1, 2, 3] }),
       Highlight,
+      Collaboration.configure({
+        document: ydoc,
+      }),
+      CollaborationCursor.configure({
+        provider,
+      }),
     ],
     immediatelyRender: false,
-    content: "<h1>Hi there!</h1>",
   }) as Editor;
 
   const toggleFormatting = useCallback(

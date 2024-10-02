@@ -8,6 +8,7 @@ import {
   Image,
   Heading1,
   Heading2,
+  Highlighter,
 } from "lucide-react";
 
 export {
@@ -20,4 +21,5 @@ export {
   Image,
   Heading1,
   Heading2,
+  Highlighter,
 };

@@ -17,6 +17,7 @@ import * as Icons from "../ui/Icons";
 import CommandsPlugin from "../extensions/commands/CommandsPlugin";
 import BubbleMenu from "./BubbleMenu"; // Import the BubbleMenu component
 import { FormatCommand } from "@/types";
+import Highlight from "@tiptap/extension-highlight"; // Import Highlight extension
 
 export function BasicEditor() {
   const editor = useEditor({
@@ -34,6 +35,7 @@ export function BasicEditor() {
       Code,
       Dropcursor.configure({ color: "black", width: 2 }),
       Heading.configure({ levels: [1, 2, 3] }),
+      Highlight,
     ],
     content: "<h1>Hi there!</h1>",
   }) as Editor;
@@ -89,6 +91,11 @@ export function BasicEditor() {
       icon: <Icons.Heading2 />,
       format: "toggleHeading" as FormatCommand,
       options: { level: 2 },
+    },
+    {
+      name: "Highlighter",
+      icon: <Icons.Highlighter />,
+      format: "toggleHighlight" as FormatCommand,
     },
   ];
 

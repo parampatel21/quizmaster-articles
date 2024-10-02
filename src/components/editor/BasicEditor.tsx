@@ -37,6 +37,7 @@ export function BasicEditor() {
       Heading.configure({ levels: [1, 2, 3] }),
       Highlight,
     ],
+    immediatelyRender: false,
     content: "<h1>Hi there!</h1>",
   }) as Editor;
 

@@ -22,6 +22,7 @@ import { HocuspocusProvider } from "@hocuspocus/provider";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { EditorModeContext } from "@/context/EditorModeContext";
+import { MCQNode } from "../extensions/mcq/MCQNode";
 
 const ydoc = new Y.Doc();
 
@@ -56,6 +57,7 @@ export function BasicEditor() {
       CollaborationCursor.configure({
         provider,
       }),
+      MCQNode,
     ],
     immediatelyRender: false,
   }) as Editor;

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -22,6 +22,7 @@ import * as Y from "yjs";
 import { HocuspocusProvider } from "@hocuspocus/provider";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
+import { EditorModeContext } from "@/context/EditorModeContext";
 
 const ydoc = new Y.Doc();
 
@@ -33,13 +34,14 @@ const provider = new HocuspocusProvider({
 });
 
 export function BasicEditor() {
+  const { isInstructor } = useContext(EditorModeContext);
   const editor = useEditor({
+    editable: isInstructor,
     extensions: [
       Document,
       History,
       Paragraph,
       Text,
-      Link.configure({ openOnClick: false }),
       Bold,
       Underline,
       Italic,
@@ -120,11 +122,13 @@ export function BasicEditor() {
 
   return (
     <div className="relative w-full mt-4 mb-12 bg-transparent">
-      <BubbleMenu
-        editor={editor}
-        buttons={buttons}
-        toggleFormatting={toggleFormatting}
-      />
+      {editor && (
+        <BubbleMenu
+          editor={editor}
+          buttons={buttons}
+          toggleFormatting={toggleFormatting}
+        />
+      )}
       <EditorContent editor={editor} />
     </div>
   );

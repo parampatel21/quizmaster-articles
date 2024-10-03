@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";
@@ -32,14 +33,17 @@ const MCQComponent = ({
   };
 
   const canSave = () => {
-    return question.trim() !== "" && answers.every((ans: string) => ans.trim() !== "");
+    return (
+      question.trim() !== "" &&
+      answers.every((ans: string) => ans.trim() !== "")
+    );
   };
 
   const finalizeMCQ = () => {
     if (canSave()) {
       setIsFinalized(true);
     } else {
-      alert('All fields must be filled in to save.');
+      alert("All fields must be filled in to save.");
     }
   };
 
@@ -48,7 +52,11 @@ const MCQComponent = ({
   };
 
   return (
-    <NodeViewWrapper className="border border-gray-300 p-4 rounded-md select-none">
+    <NodeViewWrapper
+      className="border border-gray-300 p-4 rounded-md select-none"
+      contentEditable={false}
+      draggable="true" // Makes the wrapper draggable
+    >
       {isFinalized ? (
         <div>
           <h3 className="text-gray-700">{question}</h3>

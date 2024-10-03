@@ -3,15 +3,15 @@ import { ReactNodeViewRenderer } from "@tiptap/react";
 import MCQComponent from "./MCQComponent";
 
 export const MCQNode = Node.create({
-  name: 'mcq',
-  group: 'block',
-  content: 'inline*', // This allows any inline content or none, making it flexible.
+  name: "mcq",
+  group: "block",
+  content: "inline*",
   draggable: true,
 
   addAttributes() {
     return {
       question: {
-        default: '',
+        default: "",
       },
       answers: {
         default: [],
@@ -23,11 +23,11 @@ export const MCQNode = Node.create({
   },
 
   parseHTML() {
-    return [{ tag: 'mcq' }];
+    return [{ tag: "mcq" }];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'mcq' }), 0];
+    return ["div", mergeAttributes(HTMLAttributes, { "data-type": "mcq" }), 0];
   },
 
   addNodeView() {

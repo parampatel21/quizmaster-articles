@@ -23,7 +23,7 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import { MCQNode } from "../extensions/mcq/MCQNode";
-import Gapcursor from '@tiptap/extension-gapcursor'
+import Gapcursor from "@tiptap/extension-gapcursor";
 
 const ydoc = new Y.Doc();
 

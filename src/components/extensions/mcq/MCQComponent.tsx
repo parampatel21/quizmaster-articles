@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
+import * as Icons from "@/components/ui/Icons";
 
 const MCQComponent = ({
   node,
@@ -31,8 +31,16 @@ const MCQComponent = ({
     updateAttributes({ answers: newAnswers });
   };
 
+  const canSave = () => {
+    return question.trim() !== "" && answers.every((ans: string) => ans.trim() !== "");
+  };
+
   const finalizeMCQ = () => {
-    setIsFinalized(true);
+    if (canSave()) {
+      setIsFinalized(true);
+    } else {
+      alert('All fields must be filled in to save.');
+    }
   };
 
   const editMCQ = () => {
@@ -40,10 +48,10 @@ const MCQComponent = ({
   };
 
   return (
-    <NodeViewWrapper className="border border-gray-300 p-4 rounded-md">
+    <NodeViewWrapper className="border border-gray-300 p-4 rounded-md select-none">
       {isFinalized ? (
         <div>
-          <h4 className="text-gray-700">{question}</h4>
+          <h3 className="text-gray-700">{question}</h3>
           <ul>
             {answers.map((answer: string, index: number) => (
               <li key={index} className="flex items-center mb-2">
@@ -76,11 +84,10 @@ const MCQComponent = ({
                 updateAttributes({ question: e.target.value })
               }
               placeholder="Enter your question"
-              className="w-full border-2 border-purple-500 rounded-md p-2 focus:outline-none"
+              className="w-full border-2 border-purple-500 rounded-md p-2 focus:outline-none select-text"
             />
           </div>
-          <div className="mb-4">
-            <h4 className="text-gray-700">Options:</h4>
+          <div>
             {answers.map((answer: string, index: number) => (
               <div key={index} className="flex items-center mb-2">
                 <input
@@ -97,29 +104,32 @@ const MCQComponent = ({
                     handleInputChange(e, index)
                   }
                   placeholder={`Answer ${index + 1}`}
-                  className="w-full border border-gray-300 rounded-md p-2 mr-2"
+                  className="w-full border border-gray-300 rounded-md p-2 mr-2 select-text"
                 />
                 <button
                   onClick={() => removeAnswer(index)}
                   className="bg-red-500 text-white rounded-md px-2 py-1"
                 >
-                  Remove
+                  <Icons.Trash2 />
                 </button>
               </div>
             ))}
-            <button
-              onClick={addAnswer}
-              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Add Option
-            </button>
+
+            <div className="flex justify-between items-center">
+              <button
+                onClick={addAnswer}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center"
+              >
+                <Icons.CirclePlus className="mr-2" /> Add Option
+              </button>
+              <button
+                onClick={finalizeMCQ}
+                className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center"
+              >
+                <Icons.Save className="mr-2" /> Save
+              </button>
+            </div>
           </div>
-          <button
-            onClick={finalizeMCQ}
-            className="mt-2 bg-green-500 text-white px-4 py-2 rounded-md"
-          >
-            Finalize
-          </button>
         </div>
       )}
     </NodeViewWrapper>

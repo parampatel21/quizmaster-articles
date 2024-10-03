@@ -10,6 +10,11 @@
   outline: none;
 }
 
+.ProseMirror .mcq {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .tiptap {
   /* Little gap up top. */
   :first-child {

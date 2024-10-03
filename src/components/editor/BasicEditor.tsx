@@ -23,6 +23,7 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import { MCQNode } from "../extensions/mcq/MCQNode";
+import Gapcursor from '@tiptap/extension-gapcursor'
 
 const ydoc = new Y.Doc();
 
@@ -38,6 +39,7 @@ export function BasicEditor() {
   const editor = useEditor({
     editable: isInstructor,
     extensions: [
+      MCQNode,
       Document,
       History,
       Paragraph,
@@ -48,7 +50,6 @@ export function BasicEditor() {
       Strike,
       CommandsPlugin,
       Code,
-      Dropcursor.configure({ color: "black", width: 2 }),
       Heading.configure({ levels: [1, 2, 3] }),
       Highlight,
       Collaboration.configure({
@@ -57,7 +58,8 @@ export function BasicEditor() {
       CollaborationCursor.configure({
         provider,
       }),
-      MCQNode,
+      Gapcursor,
+      Dropcursor,
     ],
     immediatelyRender: false,
   }) as Editor;

@@ -9,6 +9,7 @@ import {
   Heading1,
   Heading2,
   Highlighter,
+  ListTodo,
 } from "lucide-react";
 
 export {
@@ -22,4 +23,5 @@ export {
   Heading1,
   Heading2,
   Highlighter,
+  ListTodo,
 };

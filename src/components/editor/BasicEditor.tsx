@@ -1,10 +1,9 @@
 "use client";
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext } from "react";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
-import Link from "@tiptap/extension-link";
 import Bold from "@tiptap/extension-bold";
 import Underline from "@tiptap/extension-underline";
 import Italic from "@tiptap/extension-italic";
@@ -75,50 +74,53 @@ export function BasicEditor() {
     return null;
   }
 
-  const buttons = [
-    {
-      name: "Bold",
-      icon: <Icons.Bold />,
-      format: "toggleBold" as FormatCommand,
-    },
-    {
-      name: "Underline",
-      icon: <Icons.Underline />,
-      format: "toggleUnderline" as FormatCommand,
-    },
-    {
-      name: "Italic",
-      icon: <Icons.Italic />,
-      format: "toggleItalic" as FormatCommand,
-    },
-    {
-      name: "Strike",
-      icon: <Icons.Strikethrough />,
-      format: "toggleStrike" as FormatCommand,
-    },
-    {
-      name: "Code",
-      icon: <Icons.Code />,
-      format: "toggleCodeBlock" as FormatCommand,
-    },
-    {
-      name: "Heading1",
-      icon: <Icons.Heading1 />,
-      format: "toggleHeading" as FormatCommand,
-      options: { level: 1 },
-    },
-    {
-      name: "Heading2",
-      icon: <Icons.Heading2 />,
-      format: "toggleHeading" as FormatCommand,
-      options: { level: 2 },
-    },
-    {
-      name: "Highlighter",
-      icon: <Icons.Highlighter />,
-      format: "toggleHighlight" as FormatCommand,
-    },
-  ];
+  const buttons = isInstructor
+    ? [
+        {
+          name: "Bold",
+          icon: <Icons.Bold />,
+          format: "toggleBold" as FormatCommand,
+        },
+        {
+          name: "Underline",
+          icon: <Icons.Underline />,
+          format: "toggleUnderline" as FormatCommand,
+        },
+        {
+          name: "Italic",
+          icon: <Icons.Italic />,
+          format: "toggleItalic" as FormatCommand,
+        },
+        {
+          name: "Strike",
+          icon: <Icons.Strikethrough />,
+          format: "toggleStrike" as FormatCommand,
+        },
+        {
+          name: "Code",
+          icon: <Icons.Code />,
+          format: "toggleCodeBlock" as FormatCommand,
+        },
+        {
+          name: "Heading1",
+          icon: <Icons.Heading1 />,
+          format: "toggleHeading" as FormatCommand,
+          options: { level: 1 },
+        },
+        {
+          name: "Heading2",
+          icon: <Icons.Heading2 />,
+          format: "toggleHeading" as FormatCommand,
+          options: { level: 2 },
+        },
+      ]
+    : [
+        {
+          name: "Highlighter",
+          icon: <Icons.Highlighter />,
+          format: "toggleHighlight" as FormatCommand,
+        },
+      ];
 
   return (
     <div className="relative w-full mt-4 mb-12 bg-transparent">

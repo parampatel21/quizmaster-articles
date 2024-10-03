@@ -78,6 +78,24 @@ const CommandsPlugin = Extension.create({
                   .run();
               },
             },
+            {
+              title: "MCQ Question",
+              icon: <Icons.ListTodo />, // Use your chosen icon
+              command: ({
+                editor,
+                range,
+              }: {
+                editor: Editor;
+                range: Range;
+              }) => {
+                editor
+                  .chain()
+                  .focus()
+                  .deleteRange(range) // Delete the slash menu trigger
+                  .setNode("mcq") // Insert the MCQ block node
+                  .run();
+              },
+            },
           ]
             .filter((item) =>
               item.title.toLowerCase().startsWith(query.toLowerCase())

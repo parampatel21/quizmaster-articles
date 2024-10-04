@@ -17,15 +17,15 @@ const FormatButton: React.FC<ButtonProps> = ({
   icon,
   isActive,
   isSelected,
-  format, // Add this prop
+  format,
   onClick,
 }) => (
   <button
     key={name}
-    className={`flex justify-center items-center w-8 h-8 p-0 rounded transition-colors duration-150 ${
-      isActive || (isSelected && format !== "toggleHeading") // Disable highlight for H1/H2
-        ? "bg-blue-500 text-white"
-        : "hover:bg-gray-600 text-gray-300"
+    className={`btn btn-sm btn-circle p-0 transition-colors duration-150 ${
+      isActive || (isSelected && format !== "toggleHeading")
+        ? "bg-primary text-primary-content" // Active state using corporate primary color
+        : "bg-secondary text-neutral-content hover:bg-neutral-focus" // Inactive state using corporate neutral tones
     }`}
     onClick={onClick}
   >
@@ -73,7 +73,7 @@ const BubbleMenu: React.FC<BubbleMenuProps> = ({
   return (
     <TipTapBubbleMenu
       pluginKey="bubbleMenuText"
-      className="flex items-center gap-2 p-2 rounded-md bg-gray-800 text-white shadow-lg dark:bg-gray-700"
+      className="flex items-center gap-2 p-2 rounded-lg bg-base-200 shadow-md" // Updated to base-200 for a cleaner, corporate look
       tippyOptions={{ duration: 150 }}
       editor={editor}
       shouldShow={({ from, to }) => from !== to}
@@ -83,7 +83,7 @@ const BubbleMenu: React.FC<BubbleMenuProps> = ({
           key={name}
           name={name}
           icon={icon}
-          format={format} // Pass the format to FormatButton
+          format={format}
           options={options}
           isActive={editor.isActive(format.toLowerCase(), options)}
           isSelected={selectedFormat === format}

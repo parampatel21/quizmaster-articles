@@ -21,8 +21,19 @@ const MCQComponent = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isSelected && (e.key === "Delete" || e.key === "Backspace"))
+      const target = e.target as HTMLElement | null;
+    
+      // Only delete the block if backspace or delete is pressed while the block is selected
+      // and the focus is NOT in an input field
+      if (
+        isSelected &&
+        (e.key === "Delete" || e.key === "Backspace") &&
+        !(target instanceof HTMLInputElement)
+      ) {
         deleteNode();
+      }
+    
+      // If the block is selected and arrow keys are pressed, deselect the block and move focus
       if (
         isSelected &&
         ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
@@ -31,6 +42,7 @@ const MCQComponent = ({
         editor?.commands.focus();
       }
     };
+    
 
     const handleClickOutside = (e: MouseEvent) => {
       if (!(e.target as HTMLElement).closest(".mcq-wrapper")) {
@@ -67,19 +79,12 @@ const MCQComponent = ({
   const editMCQ = () => setIsFinalized(false);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (
-      !(
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLButtonElement
-      )
-    ) {
+    const target = e.target as HTMLElement | null;
+    if (target && !(target instanceof HTMLInputElement) && !(target instanceof HTMLButtonElement)) {
       setIsSelected(true);
-      editor?.commands.blur();
-    } else {
-      setIsSelected(false);
-      editor?.commands.focus();
     }
   };
+  
 
   return (
     <NodeViewWrapper
@@ -88,7 +93,7 @@ const MCQComponent = ({
       }`}
       contentEditable={false}
       draggable="true"
-      onClick={handleClick}
+      onClick={handleClick} // Do not blur editor when clicking
     >
       {isFinalized ? (
         <div>

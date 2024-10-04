@@ -127,7 +127,7 @@ export function BasicEditor() {
       ];
 
   return (
-    <div className="relative w-full mt-4 mb-12 bg-transparent">
+    <div className="relative w-full mt-4 mb-12">
       {editor && (
         <BubbleMenu
           editor={editor}

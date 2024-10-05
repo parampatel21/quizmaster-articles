@@ -14,6 +14,8 @@ import {
   CirclePlus,
   Save,
   CircleHelp,
+  CircleCheck,
+  CircleX
 } from "lucide-react";
 
 export {
@@ -32,4 +34,6 @@ export {
   CirclePlus,
   Save,
   CircleHelp,
+  CircleCheck,
+  CircleX
 };

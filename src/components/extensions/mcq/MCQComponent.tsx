@@ -21,8 +21,12 @@ const MCQComponent = ({
   const [localSelectedAnswer, setLocalSelectedAnswer] = useState<number | null>(
     selectedAnswer
   );
+  const [readerSelectedAnswer, setReaderSelectedAnswer] = useState<number | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const newAnswerInputRef = useRef<HTMLInputElement | null>(null);
-  const { setAllMCQsFinalized } = useContext(EditorModeContext);
+  const { setAllMCQsFinalized, isInstructor } = useContext(EditorModeContext);
+  const [attemptedAnswers, setAttemptedAnswers] = useState<number[]>([]);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   useEffect(() => {
     setAllMCQsFinalized(isFinalized);
@@ -146,131 +150,207 @@ const MCQComponent = ({
     updateAttributes({ selectedAnswer: index });
   };
 
+  const handleReaderSelectAnswer = (index: number) => {
+    if (!attemptedAnswers.includes(index)) {
+      setReaderSelectedAnswer(index);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (readerSelectedAnswer !== null) {
+      setIsSubmitted(true);
+      setAttemptedAnswers([...attemptedAnswers, readerSelectedAnswer]);
+      if (readerSelectedAnswer === selectedAnswer) {
+        setIsCorrect(true);
+      } else {
+        setReaderSelectedAnswer(null);
+      }
+      // Here you would typically send the selected answer to your backend
+      console.log(`Submitted answer: ${readerSelectedAnswer}`);
+    }
+  };
+
+  
+  const handleClearSubmission = () => {
+    setIsSubmitted(false);
+    setReaderSelectedAnswer(null);
+    setAttemptedAnswers([]);
+    setIsCorrect(false);
+  };
+
+
   return (
     <NodeViewWrapper
       className={`mcq-wrapper border p-4 rounded-lg select-none ${
-        isSelected ? "border-success" : "border-base-300"
+        isSelected && isInstructor ? "border-success" : "border-base-300"
       }`}
       contentEditable={false}
-      draggable="true"
-      onClick={handleClick}
+      draggable={isInstructor ? "true" : "false"}
+      onClick={isInstructor ? handleClick : undefined}
     >
       <div className="p-2 bg-base-200 rounded-md shadow mb-4 flex items-center gap-2">
         <Icons.CircleHelp className="w-6 h-6" />
         <h3 className="font-thin text-gray-800">Multiple Choice Question</h3>
       </div>
 
-      {isFinalized ? (
-        <>
-          <div className="p-4 rounded-md shadow bg-base-200">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">
-              {question}
-            </h2>
-            <ul className="my-2">
+      {isInstructor ? (
+        isFinalized ? (
+          <>
+            <div className="p-4 rounded-md shadow bg-base-200">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">
+                {question}
+              </h2>
+              <ul className="my-2">
+                {answers.map((answer: string, index: number) => (
+                  <li key={index} className="flex items-center gap-2 mb-6">
+                    <input
+                      type="radio"
+                      name="mcq-finalized"
+                      checked={selectedAnswer === index}
+                      onChange={() => {}} // Disabled in finalized state
+                      className="radio radio-primary"
+                      disabled
+                    />
+                    <span className="text-base font-medium text-gray-700">
+                      {answer}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <button onClick={editMCQ} className="btn btn-sm btn-accent">
+                Edit
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="p-4 rounded-md shadow">
+              {errorMessage && (
+                <div role="alert" className="alert alert-error mb-4">
+              <Icons.CircleX/>
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+              <input
+                type="text"
+                value={question}
+                onChange={(e) => updateAttributes({ question: e.target.value })}
+                placeholder="Enter your question"
+                className="input input-bordered w-full mb-4"
+              />
               {answers.map((answer: string, index: number) => (
-                <li key={index} className="flex items-center gap-2 mb-6">
+                <div key={index} className="flex items-center gap-2 mb-2">
                   <input
                     type="radio"
-                    name="mcq-finalized"
-                    checked={selectedAnswer === index}
-                    onChange={() => {}} // Disabled in finalized state
+                    name="mcq"
+                    checked={localSelectedAnswer === index}
+                    onChange={() => handleSelectAnswer(index)}
+                    className="radio radio-primary"
+                  />
+                  <input
+                    ref={index === answers.length - 1 ? newAnswerInputRef : null}
+                    type="text"
+                    value={answer}
+                    onChange={(e) => handleInputChange(index, e.target.value)}
+                    placeholder={`Answer ${index + 1}`}
+                    className="input input-bordered w-full"
+                  />
+                  <button
+                    onClick={() => removeAnswer(index)}
+                    className="btn btn-error btn-outline btn-circle btn-sm"
+                  >
+                    <Icons.Trash2 className="w-6 h-6 p-1" />
+                  </button>
+                </div>
+              ))}
+              {answers.length === 0 && (
+                <div className="flex items-center gap-2 mb-2">
+                  <input
+                    type="radio"
+                    name="mcq"
                     className="radio radio-primary"
                     disabled
                   />
-                  <span className="text-base font-medium text-gray-700">
-                    {answer}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <button onClick={editMCQ} className="btn btn-sm btn-accent">
-              Edit
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="p-4 rounded-md shadow">
-            {errorMessage && (
-              <div role="alert" className="alert alert-error mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 shrink-0 stroke-current"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  <input
+                    type="text"
+                    value=""
+                    onChange={(e) => handleInputChange(0, e.target.value)}
+                    placeholder="Answer 1"
+                    className="input input-bordered w-full"
                   />
-                </svg>
-                <span>{errorMessage}</span>
-              </div>
-            )}
-            <input
-              type="text"
-              value={question}
-              onChange={(e) => updateAttributes({ question: e.target.value })}
-              placeholder="Enter your question"
-              className="input input-bordered w-full mb-4"
-            />
-            {answers.map((answer: string, index: number) => (
-              <div key={index} className="flex items-center gap-2 mb-2">
-                <input
-                  type="radio"
-                  name="mcq"
-                  checked={localSelectedAnswer === index}
-                  onChange={() => handleSelectAnswer(index)}
-                  className="radio radio-primary"
-                />
-                <input
-                  ref={index === answers.length - 1 ? newAnswerInputRef : null}
-                  type="text"
-                  value={answer}
-                  onChange={(e) => handleInputChange(index, e.target.value)}
-                  placeholder={`Answer ${index + 1}`}
-                  className="input input-bordered w-full"
-                />
-                <button
-                  onClick={() => removeAnswer(index)}
-                  className="btn btn-error btn-outline btn-circle btn-sm"
-                >
-                  <Icons.Trash2 className="w-6 h-6 p-1" />
+                </div>
+              )}
+              <div className="flex justify-between items-center mt-4">
+                <button onClick={addAnswer} className="btn btn-sm btn-primary">
+                  Add Answer
+                </button>
+                <button onClick={finalizeMCQ} className="btn btn-sm btn-accent">
+                  Save
                 </button>
               </div>
-            ))}
-            {answers.length === 0 && (
-              <div className="flex items-center gap-2 mb-2">
+            </div>
+          </>
+        )
+      ) : (
+        <div className="p-4 rounded-md shadow bg-base-200">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">{question}</h2>
+          {errorMessage && (
+            <div role="alert" className="alert alert-error mb-4">
+              <Icons.CircleX/>
+              <span>{errorMessage}</span>
+            </div>
+          )}
+          <ul className="my-2">
+            {answers.map((answer: string, index: number) => (
+              <li key={index} className="flex items-center gap-2 mb-6">
                 <input
                   type="radio"
-                  name="mcq"
+                  name={`mcq-reader-${node.attrs.id}`}
+                  checked={readerSelectedAnswer === index}
+                  onChange={() => handleReaderSelectAnswer(index)}
                   className="radio radio-primary"
-                  disabled
+                  disabled={isSubmitted && attemptedAnswers.includes(index)}
                 />
-                <input
-                  type="text"
-                  value=""
-                  onChange={(e) => handleInputChange(0, e.target.value)}
-                  placeholder="Answer 1"
-                  className="input input-bordered w-full"
-                />
+                <span className="text-base font-medium text-gray-700">
+                  {answer}
+                </span>
+                {isSubmitted && isCorrect && index === selectedAnswer && (
+                  <Icons.CircleCheck className="w-6 h-6 text-success ml-2" />
+                )}
+                {isSubmitted && attemptedAnswers.includes(index) && index !== selectedAnswer && (
+                  <Icons.CircleX className="w-6 h-6 text-error ml-2" />
+                )}
+              </li>
+            ))}
+          </ul>
+          {!isSubmitted ? (
+            <button onClick={handleSubmit} className="btn btn-sm btn-primary" disabled={readerSelectedAnswer === null}>
+              Submit Answer
+            </button>
+          ) : isCorrect ? (
+            <div>
+              <div className="text-lg font-semibold text-success mb-2">
+                Correct!
               </div>
-            )}
-            <div className="flex justify-between items-center mt-4">
-              <button onClick={addAnswer} className="btn btn-sm btn-primary">
-                Add Answer
-              </button>
-              <button onClick={finalizeMCQ} className="btn btn-sm btn-accent">
-                Save
+              <button onClick={handleClearSubmission} className="btn btn-sm btn-secondary">
+                Clear
               </button>
             </div>
-          </div>
-        </>
+          ) : (
+            <div>
+              <div className="text-lg font-semibold text-error mb-2">
+                Incorrect. Try again!
+              </div>
+              <button onClick={handleSubmit} className="btn btn-sm btn-primary" disabled={readerSelectedAnswer === null}>
+                Submit Answer
+              </button>
+            </div>
+          )}
+        </div>
       )}
     </NodeViewWrapper>
   );
+
 };
 
 export default MCQComponent;

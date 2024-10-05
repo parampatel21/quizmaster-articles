@@ -6,7 +6,11 @@ export const EditorModeContext = createContext({
   toggleMode: () => {},
 });
 
-export const EditorModeProvider = ({ children }: { children: React.ReactNode }) => {
+export const EditorModeProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [isInstructor, setIsInstructor] = useState(true);
 
   const toggleMode = () => {

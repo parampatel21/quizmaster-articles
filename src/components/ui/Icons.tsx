@@ -12,7 +12,8 @@ import {
   ListTodo,
   Trash2,
   CirclePlus,
-  Save
+  Save,
+  CircleHelp,
 } from "lucide-react";
 
 export {
@@ -29,5 +30,6 @@ export {
   ListTodo,
   Trash2,
   CirclePlus,
-  Save
+  Save,
+  CircleHelp,
 };

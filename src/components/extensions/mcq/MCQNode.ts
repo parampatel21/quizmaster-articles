@@ -16,8 +16,11 @@ export const MCQNode = Node.create({
       answers: {
         default: [],
       },
-      correctAnswer: {
+      selectedAnswer: {
         default: null,
+      },
+      isFinalized: {
+        default: false,
       },
     };
   },

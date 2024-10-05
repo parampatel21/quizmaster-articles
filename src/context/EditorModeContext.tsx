@@ -1,9 +1,18 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 
-export const EditorModeContext = createContext({
+interface EditorModeContextType {
+  isInstructor: boolean;
+  toggleMode: () => void;
+  allMCQsFinalized: boolean;
+  setAllMCQsFinalized: (finalized: boolean) => void;
+}
+
+export const EditorModeContext = createContext<EditorModeContextType>({
   isInstructor: true, // default to instructor mode
   toggleMode: () => {},
+  allMCQsFinalized: true,
+  setAllMCQsFinalized: () => {},
 });
 
 export const EditorModeProvider = ({
@@ -12,13 +21,23 @@ export const EditorModeProvider = ({
   children: React.ReactNode;
 }) => {
   const [isInstructor, setIsInstructor] = useState(true);
+  const [allMCQsFinalized, setAllMCQsFinalized] = useState(true);
 
-  const toggleMode = () => {
-    setIsInstructor((prev) => !prev);
-  };
+  const toggleMode = useCallback(() => {
+    if (allMCQsFinalized) {
+      setIsInstructor((prev) => !prev);
+    }
+  }, [allMCQsFinalized]);
 
   return (
-    <EditorModeContext.Provider value={{ isInstructor, toggleMode }}>
+    <EditorModeContext.Provider
+      value={{
+        isInstructor,
+        toggleMode,
+        allMCQsFinalized,
+        setAllMCQsFinalized,
+      }}
+    >
       {children}
     </EditorModeContext.Provider>
   );

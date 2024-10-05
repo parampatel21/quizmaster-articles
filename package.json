@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "client": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "ts-node server/server.mjs"
+    "server": "ts-node server/server.mjs",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "@hocuspocus/extension-sqlite": "^2.13.6",
@@ -34,6 +35,8 @@
     "@tiptap/react": "^2.8.0",
     "@tiptap/starter-kit": "^2.8.0",
     "@tiptap/suggestion": "^2.8.0",
+    "concurrent": "^0.3.2",
+    "concurrently": "^9.0.1",
     "lucide-react": "^0.447.0",
     "next": "14.2.14",
     "react": "^18",

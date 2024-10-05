@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";
+import { EditorModeContext } from "@/context/EditorModeContext";
 
 const MCQComponent = ({
   node,
@@ -21,6 +22,11 @@ const MCQComponent = ({
     selectedAnswer
   );
   const newAnswerInputRef = useRef<HTMLInputElement | null>(null);
+  const { setAllMCQsFinalized } = useContext(EditorModeContext);
+
+  useEffect(() => {
+    setAllMCQsFinalized(isFinalized);
+  }, [isFinalized, setAllMCQsFinalized]);
 
   useEffect(() => {
     setLocalSelectedAnswer(selectedAnswer);
@@ -235,6 +241,23 @@ const MCQComponent = ({
                 </button>
               </div>
             ))}
+            {answers.length === 0 && (
+              <div className="flex items-center gap-2 mb-2">
+                <input
+                  type="radio"
+                  name="mcq"
+                  className="radio radio-primary"
+                  disabled
+                />
+                <input
+                  type="text"
+                  value=""
+                  onChange={(e) => handleInputChange(0, e.target.value)}
+                  placeholder="Answer 1"
+                  className="input input-bordered w-full"
+                />
+              </div>
+            )}
             <div className="flex justify-between items-center mt-4">
               <button onClick={addAnswer} className="btn btn-sm btn-primary">
                 Add Answer
@@ -251,21 +274,3 @@ const MCQComponent = ({
 };
 
 export default MCQComponent;
-
-// {answers.length === 0 && (
-//   <div className="flex items-center gap-2 mb-2">
-//     <input
-//       type="radio"
-//       name="mcq"
-//       className="radio radio-primary"
-//       disabled
-//     />
-//     <input
-//       type="text"
-//       value=""
-//       onChange={(e) => handleInputChange(0, e.target.value)}
-//       placeholder="Answer 1"
-//       className="input input-bordered w-full"
-//     />
-//   </div>
-// )}

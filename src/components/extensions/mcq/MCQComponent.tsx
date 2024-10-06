@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";
 import { EditorModeContext } from "@/context/EditorModeContext";
+import SubmissionHistory from "@/components/ui/SubmissionHistory";
 
 const MCQComponent = ({
   node,
@@ -14,6 +15,7 @@ const MCQComponent = ({
   updateAttributes: (attrs: any) => void;
   deleteNode: () => void;
   editor: any;
+  mcqId: string;
 }) => {
   const { question, answers, isFinalized, selectedAnswer } = node.attrs;
   const [isSelected, setIsSelected] = useState(false);
@@ -29,6 +31,11 @@ const MCQComponent = ({
   const { setAllMCQsFinalized, isInstructor } = useContext(EditorModeContext);
   const [attemptedAnswers, setAttemptedAnswers] = useState<number[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+
+  const handleHistoryButtonClick = () => {
+    setShowHistory((prev) => !prev);
+  };
 
   useEffect(() => {
     setAllMCQsFinalized(isFinalized);
@@ -86,13 +93,16 @@ const MCQComponent = ({
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = async (e: KeyboardEvent) => {
     const target = e.target as HTMLElement | null;
     if (
       isSelected &&
       ["Delete", "Backspace"].includes(e.key) &&
       !(target instanceof HTMLInputElement)
     ) {
+      if (node.attrs.id) {
+        await deleteMCQFromDatabase(node.attrs.id);
+      }
       deleteNode();
     } else if (
       isSelected &&
@@ -100,6 +110,22 @@ const MCQComponent = ({
     ) {
       setIsSelected(false);
       editor?.commands.focus();
+    }
+  };
+
+  const deleteMCQFromDatabase = async (mcqId: string) => {
+    try {
+      const response = await fetch(`api/mcq/${mcqId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete MCQ: ${response.statusText}`);
+      }
+
+      console.log("MCQ deleted successfully");
+    } catch (error) {
+      console.error("Error deleting MCQ:", error);
     }
   };
 
@@ -250,10 +276,25 @@ const MCQComponent = ({
                   </li>
                 ))}
               </ul>
-              <button onClick={editMCQ} className="btn btn-sm btn-accent">
-                Edit
-              </button>
+              <div className="flex justify-between items-center mt-4">
+                <button onClick={editMCQ} className="btn btn-sm btn-accent">
+                  Edit
+                </button>
+                <button
+                  onClick={handleHistoryButtonClick}
+                  className="btn btn-sm btn-neutral ml-auto"
+                >
+                  {showHistory ? "Past Submissions" : "Past Submissions"}
+                </button>
+              </div>
             </div>
+            {showHistory && (
+              <SubmissionHistory
+                mcqId={node.attrs.id}
+                show={showHistory}
+                onClose={handleHistoryButtonClick}
+              />
+            )}
           </>
         ) : (
           <>

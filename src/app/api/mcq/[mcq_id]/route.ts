@@ -40,3 +40,30 @@ export async function GET(
     await db.close();
   }
 }
+export async function DELETE(
+  request: Request,
+  { params }: { params: { mcq_id: string } }
+) {
+  const { mcq_id } = params;
+  const db = await openDb();
+
+  try {
+    await db.run("DELETE FROM mcq_submissions WHERE mcq_id = ?", [mcq_id]);
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: `MCQ submissions deleted for mcq_id: ${mcq_id}`,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting MCQ block and submissions:", error);
+    return NextResponse.json(
+      { error: "Failed to delete MCQ block and submissions" },
+      { status: 500 }
+    );
+  } finally {
+    await db.close();
+  }
+}

@@ -15,7 +15,6 @@ const MCQComponent = ({
   updateAttributes: (attrs: any) => void;
   deleteNode: () => void;
   editor: any;
-  mcqId: string;
 }) => {
   const { question, answers, isFinalized, selectedAnswer } = node.attrs;
   const [isSelected, setIsSelected] = useState(false);
@@ -63,6 +62,7 @@ const MCQComponent = ({
 
   const submitAnswer = async () => {
     if (readerSelectedAnswer !== null) {
+      const selectedAnswerText = answers[readerSelectedAnswer]; // Get the selected answer text
       const isCorrect = readerSelectedAnswer === selectedAnswer;
       setIsSubmitted(true);
       setAttemptedAnswers([...attemptedAnswers, readerSelectedAnswer]);
@@ -74,12 +74,12 @@ const MCQComponent = ({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             mcq_id: node.attrs.id,
-            selected_answer: readerSelectedAnswer,
+            selected_answer: selectedAnswerText,
             is_correct: isCorrect,
           }),
         });
 
-        console.log(node.attrs.id);
+        console.log(node.attrs.id, selectedAnswerText);
 
         if (!response.ok) {
           throw new Error("Failed to submit answer");
@@ -284,7 +284,7 @@ const MCQComponent = ({
                   onClick={handleHistoryButtonClick}
                   className="btn btn-sm btn-neutral ml-auto"
                 >
-                  {showHistory ? "Past Submissions" : "Past Submissions"}
+                  {showHistory ? "Submission History" : "Submission History"}
                 </button>
               </div>
             </div>
@@ -293,6 +293,7 @@ const MCQComponent = ({
                 mcqId={node.attrs.id}
                 show={showHistory}
                 onClose={handleHistoryButtonClick}
+                question={question}
               />
             )}
           </>

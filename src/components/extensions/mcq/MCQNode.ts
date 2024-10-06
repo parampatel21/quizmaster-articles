@@ -24,7 +24,7 @@ export const MCQNode = Node.create({
         default: false,
       },
       id: {
-        default: uuidv4(),
+        default: () => uuidv4(),
       },
     };
   },

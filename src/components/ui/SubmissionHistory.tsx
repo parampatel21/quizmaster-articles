@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 
 type Submission = {
   id: number;
-  selected_answer: number;
+  selected_answer: string;
   is_correct: boolean;
   submitted_at: string;
 };
@@ -12,15 +12,21 @@ const SubmissionHistory = ({
   mcqId,
   show,
   onClose,
+  question,
 }: {
   mcqId: string;
   show: boolean;
   onClose: () => void;
+  question: string;
 }) => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
     if (show) {
+      setShouldRender(true);
+      setTimeout(() => setIsVisible(true), 50);
       // Fetch submission history from the API
       fetch(`/api/mcq/${mcqId}`)
         .then((res) => res.json())
@@ -32,46 +38,70 @@ const SubmissionHistory = ({
           }
         })
         .catch((error) => console.error("Error fetching submissions:", error));
+    } else {
+      setIsVisible(false);
+      setTimeout(() => setShouldRender(false), 300); // Match this with the transition duration
     }
   }, [show, mcqId]);
 
-  if (!show) return null;
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(onClose, 300); // Match this with the transition duration
+  };
+
+  if (!shouldRender) return null;
 
   return (
-    <div className="fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-base-300 border-2 shadow-lg z-50 p-4 rounded-md flex flex-col">
-      <div className="flex justify-between items-center mb-4">
+    <div
+      className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-base-300 border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <div className="flex justify-between items-start">
         <h2 className="text-lg font-bold">Submission History</h2>
-        <button onClick={onClose} className="text-gray-600 hover:text-gray-800">
+        <button
+          onClick={handleClose}
+          className="text-gray-600 hover:text-gray-800"
+        >
           <X className="w-6 h-6" />
         </button>
       </div>
+      <h3 className="text-sm font-semibold text-gray-600 mb-5">{question}</h3>
       <div className="overflow-y-auto flex-grow">
-        <table className="table w-full table-xs">
-          <thead className="sticky top-0 bg-base-100 shadow-sm z-10">
-            <tr>
-              <th>#</th>
-              <th>Selected Answer</th>
-              <th>Correct</th>
-              <th>Submitted At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {submissions.map((submission, index) => (
-              <tr key={submission.id} className="hover:bg-base-200">
-                <th>{index + 1}</th>
-                <td>{submission.selected_answer}</td>
-                <td
-                  className={
-                    submission.is_correct ? "text-success" : "text-error"
-                  }
-                >
-                  {submission.is_correct ? "Yes" : "No"}
-                </td>
-                <td>{new Date(submission.submitted_at).toLocaleString()}</td>
+        {submissions.length === 0 ? (
+          <p className="text-center text-gray-500">No submissions available.</p>
+        ) : (
+          <table className="table w-full table-xs">
+            <thead className="sticky top-0 bg-base-100 shadow-sm z-10">
+              <tr>
+                <th>#</th>
+                <th>Selected Answer</th>
+                <th>Correct</th>
+                <th>Submitted At</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {submissions.map((submission, index) => (
+                <tr key={submission.id} className="hover:bg-base-200">
+                  <th>{index + 1}</th>
+                  <td>
+                    {submission.selected_answer.length > 20
+                      ? submission.selected_answer.slice(0, 17) + "..."
+                      : submission.selected_answer}
+                  </td>
+                  <td
+                    className={
+                      submission.is_correct ? "text-success" : "text-error"
+                    }
+                  >
+                    {submission.is_correct ? "Yes" : "No"}
+                  </td>
+                  <td>{new Date(submission.submitted_at).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import MCQComponent from "./MCQComponent";
+import { v4 as uuidv4 } from "uuid";
 
 export const MCQNode = Node.create({
   name: "mcq",
@@ -21,6 +22,9 @@ export const MCQNode = Node.create({
       },
       isFinalized: {
         default: false,
+      },
+      id: {
+        default: uuidv4(),
       },
     };
   },

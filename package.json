@@ -44,6 +44,7 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "tippy.js": "^6.3.7",
+    "uuid": "^10.0.0",
     "y-prosemirror": "^1.2.12",
     "y-websocket": "^2.0.4",
     "yjs": "^13.6.19"
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@types/node": "22.7.4",
     "@types/react": "^18",
+    "@types/uuid": "^10.0.0",
     "daisyui": "^4.12.11",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",

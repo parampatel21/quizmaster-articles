@@ -21,7 +21,9 @@ const MCQComponent = ({
   const [localSelectedAnswer, setLocalSelectedAnswer] = useState<number | null>(
     selectedAnswer
   );
-  const [readerSelectedAnswer, setReaderSelectedAnswer] = useState<number | null>(null);
+  const [readerSelectedAnswer, setReaderSelectedAnswer] = useState<
+    number | null
+  >(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const newAnswerInputRef = useRef<HTMLInputElement | null>(null);
   const { setAllMCQsFinalized, isInstructor } = useContext(EditorModeContext);
@@ -51,6 +53,38 @@ const MCQComponent = ({
       newAnswerInputRef.current.focus();
     }
   }, [answers]);
+
+  const submitAnswer = async () => {
+    if (readerSelectedAnswer !== null) {
+      const isCorrect = readerSelectedAnswer === selectedAnswer;
+      setIsSubmitted(true);
+      setAttemptedAnswers([...attemptedAnswers, readerSelectedAnswer]);
+      setIsCorrect(isCorrect);
+
+      try {
+        const response = await fetch("/api/mcq/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mcq_id: node.attrs.id,
+            selected_answer: readerSelectedAnswer,
+            is_correct: isCorrect,
+          }),
+        });
+
+        console.log(node.attrs.id);
+
+        if (!response.ok) {
+          throw new Error("Failed to submit answer");
+        }
+
+        // Optionally, you can update the local state or perform other actions here
+      } catch (error) {
+        console.error("Error submitting answer:", error);
+        // Handle error (e.g., show an error message to the user)
+      }
+    }
+  };
 
   const handleKeyDown = (e: KeyboardEvent) => {
     const target = e.target as HTMLElement | null;
@@ -166,18 +200,17 @@ const MCQComponent = ({
         setReaderSelectedAnswer(null);
       }
       // Here you would typically send the selected answer to your backend
-      console.log(`Submitted answer: ${readerSelectedAnswer}`);
+      submitAnswer();
+      // console.log(`Submitted answer: ${readerSelectedAnswer}`);
     }
   };
 
-  
   const handleClearSubmission = () => {
     setIsSubmitted(false);
     setReaderSelectedAnswer(null);
     setAttemptedAnswers([]);
     setIsCorrect(false);
   };
-
 
   return (
     <NodeViewWrapper
@@ -227,7 +260,7 @@ const MCQComponent = ({
             <div className="p-4 rounded-md shadow">
               {errorMessage && (
                 <div role="alert" className="alert alert-error mb-4">
-              <Icons.CircleX/>
+                  <Icons.CircleX />
                   <span>{errorMessage}</span>
                 </div>
               )}
@@ -248,7 +281,9 @@ const MCQComponent = ({
                     className="radio radio-primary"
                   />
                   <input
-                    ref={index === answers.length - 1 ? newAnswerInputRef : null}
+                    ref={
+                      index === answers.length - 1 ? newAnswerInputRef : null
+                    }
                     type="text"
                     value={answer}
                     onChange={(e) => handleInputChange(index, e.target.value)}
@@ -296,7 +331,7 @@ const MCQComponent = ({
           <h2 className="text-3xl font-bold text-gray-800 mb-6">{question}</h2>
           {errorMessage && (
             <div role="alert" className="alert alert-error mb-4">
-              <Icons.CircleX/>
+              <Icons.CircleX />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -317,14 +352,20 @@ const MCQComponent = ({
                 {isSubmitted && isCorrect && index === selectedAnswer && (
                   <Icons.CircleCheck className="w-6 h-6 text-success ml-2" />
                 )}
-                {isSubmitted && attemptedAnswers.includes(index) && index !== selectedAnswer && (
-                  <Icons.CircleX className="w-6 h-6 text-error ml-2" />
-                )}
+                {isSubmitted &&
+                  attemptedAnswers.includes(index) &&
+                  index !== selectedAnswer && (
+                    <Icons.CircleX className="w-6 h-6 text-error ml-2" />
+                  )}
               </li>
             ))}
           </ul>
           {!isSubmitted ? (
-            <button onClick={handleSubmit} className="btn btn-sm btn-primary" disabled={readerSelectedAnswer === null}>
+            <button
+              onClick={handleSubmit}
+              className="btn btn-sm btn-primary"
+              disabled={readerSelectedAnswer === null}
+            >
               Submit Answer
             </button>
           ) : isCorrect ? (
@@ -332,7 +373,10 @@ const MCQComponent = ({
               <div className="text-lg font-semibold text-success mb-2">
                 Correct!
               </div>
-              <button onClick={handleClearSubmission} className="btn btn-sm btn-secondary">
+              <button
+                onClick={handleClearSubmission}
+                className="btn btn-sm btn-secondary"
+              >
                 Clear
               </button>
             </div>
@@ -341,7 +385,11 @@ const MCQComponent = ({
               <div className="text-lg font-semibold text-error mb-2">
                 Incorrect. Try again!
               </div>
-              <button onClick={handleSubmit} className="btn btn-sm btn-primary" disabled={readerSelectedAnswer === null}>
+              <button
+                onClick={handleSubmit}
+                className="btn btn-sm btn-primary"
+                disabled={readerSelectedAnswer === null}
+              >
                 Submit Answer
               </button>
             </div>
@@ -350,7 +398,6 @@ const MCQComponent = ({
       )}
     </NodeViewWrapper>
   );
-
 };
 
 export default MCQComponent;

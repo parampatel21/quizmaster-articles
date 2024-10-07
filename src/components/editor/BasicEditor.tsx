@@ -25,6 +25,7 @@ import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import { MCQNode } from "../extensions/mcq/MCQNode";
 import Gapcursor from "@tiptap/extension-gapcursor";
+import { MCQSelectionProvider } from "@/context/MCQSelectionContext";
 
 const ydoc = new Y.Doc();
 
@@ -129,15 +130,17 @@ export function BasicEditor() {
       ];
 
   return (
-    <div className="relative w-full mt-4 mb-12">
-      {editor && (
-        <BubbleMenu
-          editor={editor}
-          buttons={buttons}
-          toggleFormatting={toggleFormatting}
-        />
-      )}
-      <EditorContent editor={editor} />
-    </div>
+    <MCQSelectionProvider>
+      <div className="relative w-full mt-4 mb-12">
+        {editor && (
+          <BubbleMenu
+            editor={editor}
+            buttons={buttons}
+            toggleFormatting={toggleFormatting}
+          />
+        )}
+        <EditorContent editor={editor} />
+      </div>
+    </MCQSelectionProvider>
   );
 }

@@ -11,6 +11,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.28.0",
+    "@google/generative-ai": "^0.21.0",
     "@hocuspocus/extension-sqlite": "^2.13.6",
     "@hocuspocus/provider": "^2.13.6",
     "@hocuspocus/server": "^2.13.6",
@@ -36,10 +38,12 @@
     "@tiptap/react": "^2.8.0",
     "@tiptap/starter-kit": "^2.8.0",
     "@tiptap/suggestion": "^2.8.0",
+    "anthropic": "^0.0.0",
     "concurrent": "^0.3.2",
     "concurrently": "^9.0.1",
     "lucide-react": "^0.447.0",
     "next": "14.2.14",
+    "openai": "^4.67.2",
     "react": "^18",
     "react-dom": "^18",
     "sqlite": "^5.1.1",

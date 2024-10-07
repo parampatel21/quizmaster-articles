@@ -4,6 +4,7 @@ import { NodeViewWrapper } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import SubmissionHistory from "@/components/ui/SubmissionHistory";
+import { useMCQSelection } from "@/context/MCQSelectionContext";
 
 const MCQComponent = ({
   node,
@@ -17,7 +18,6 @@ const MCQComponent = ({
   editor: any;
 }) => {
   const { question, answers, isFinalized, selectedAnswer } = node.attrs;
-  const [isSelected, setIsSelected] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [localSelectedAnswer, setLocalSelectedAnswer] = useState<number | null>(
     selectedAnswer
@@ -31,6 +31,9 @@ const MCQComponent = ({
   const [attemptedAnswers, setAttemptedAnswers] = useState<number[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const { selectedMCQId, setSelectedMCQId } = useMCQSelection();
+
+  const isSelected = selectedMCQId === node.attrs.id;
 
   const handleHistoryButtonClick = () => {
     setShowHistory((prev) => !prev);
@@ -59,6 +62,50 @@ const MCQComponent = ({
       newAnswerInputRef.current.focus();
     }
   }, [answers]);
+
+  const handleKeyDown = async (e: KeyboardEvent) => {
+    const target = e.target as HTMLElement | null;
+    if (
+      isSelected &&
+      ["Delete", "Backspace"].includes(e.key) &&
+      !(target instanceof HTMLInputElement)
+    ) {
+      e.preventDefault();
+      if (node.attrs.id) {
+        await deleteMCQFromDatabase(node.attrs.id);
+      }
+      deleteNode();
+      setSelectedMCQId(null);
+      editor?.commands.focus();
+    } else if (
+      isSelected &&
+      ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
+    ) {
+      setSelectedMCQId(null);
+      editor?.commands.focus();
+    }
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (!(e.target as HTMLElement).closest(".mcq-wrapper")) {
+      setSelectedMCQId(null);
+      editor?.commands.focus();
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (
+      !(
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLButtonElement
+      )
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      setSelectedMCQId(node.attrs.id);
+      editor?.commands.blur();
+    }
+  };
 
   const submitAnswer = async () => {
     if (readerSelectedAnswer !== null) {
@@ -93,26 +140,6 @@ const MCQComponent = ({
     }
   };
 
-  const handleKeyDown = async (e: KeyboardEvent) => {
-    const target = e.target as HTMLElement | null;
-    if (
-      isSelected &&
-      ["Delete", "Backspace"].includes(e.key) &&
-      !(target instanceof HTMLInputElement)
-    ) {
-      if (node.attrs.id) {
-        await deleteMCQFromDatabase(node.attrs.id);
-      }
-      deleteNode();
-    } else if (
-      isSelected &&
-      ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
-    ) {
-      setIsSelected(false);
-      editor?.commands.focus();
-    }
-  };
-
   const deleteMCQFromDatabase = async (mcqId: string) => {
     try {
       const response = await fetch(`api/mcq/${mcqId}`, {
@@ -126,13 +153,6 @@ const MCQComponent = ({
       console.log("MCQ deleted successfully");
     } catch (error) {
       console.error("Error deleting MCQ:", error);
-    }
-  };
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (!(e.target as HTMLElement).closest(".mcq-wrapper")) {
-      setIsSelected(false);
-      editor?.commands.focus();
     }
   };
 
@@ -194,17 +214,6 @@ const MCQComponent = ({
     setErrorMessage(null);
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (
-      !(
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLButtonElement
-      )
-    ) {
-      setIsSelected(true);
-    }
-  };
-
   const handleSelectAnswer = (index: number) => {
     setLocalSelectedAnswer(index);
     updateAttributes({ selectedAnswer: index });
@@ -241,7 +250,9 @@ const MCQComponent = ({
   return (
     <NodeViewWrapper
       className={`mcq-wrapper border p-4 rounded-lg select-none ${
-        isSelected && isInstructor ? "border-success" : "border-base-300"
+        isSelected && isInstructor
+          ? "border-success border-2"
+          : "border-base-300"
       }`}
       contentEditable={false}
       draggable={isInstructor ? "true" : "false"}
@@ -264,7 +275,7 @@ const MCQComponent = ({
                   <li key={index} className="flex items-center gap-2 mb-6">
                     <input
                       type="radio"
-                      name="mcq-finalized"
+                      name={`mcq-finalized-${node.attrs.id}`}
                       checked={selectedAnswer === index}
                       onChange={() => {}} // Disabled in finalized state
                       className="radio radio-primary"

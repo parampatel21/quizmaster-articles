@@ -76,7 +76,19 @@ const BubbleMenu: React.FC<BubbleMenuProps> = ({
       className="flex items-center gap-2 p-2 rounded-lg bg-base-200 shadow-md" // Updated to base-200 for a cleaner, corporate look
       tippyOptions={{ duration: 150 }}
       editor={editor}
-      shouldShow={({ from, to }) => from !== to}
+      // Add the logic to hide the BubbleMenu for images
+      shouldShow={({ editor, state }) => {
+        const { selection } = state;
+        const selectedNode = state.doc.nodeAt(selection.from);
+
+        // If the selected node is an image, return false to hide the BubbleMenu
+        if (selectedNode?.type.name === "image") {
+          return false;
+        }
+
+        // Otherwise, show the BubbleMenu if text is selected
+        return selection.from !== selection.to;
+      }}
     >
       {buttons.map(({ name, icon, format, options }) => (
         <FormatButton

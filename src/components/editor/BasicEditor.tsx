@@ -11,6 +11,7 @@ import Strike from "@tiptap/extension-strike";
 import Code from "@tiptap/extension-code-block";
 import Heading from "@tiptap/extension-heading";
 import History from "@tiptap/extension-history";
+import Image from "@tiptap/extension-image";
 import Dropcursor from "@tiptap/extension-dropcursor";
 import * as Icons from "../ui/Icons";
 import CommandsPlugin from "../extensions/commands/CommandsPlugin";
@@ -52,6 +53,7 @@ export function BasicEditor() {
       Code,
       Heading.configure({ levels: [1, 2, 3] }),
       Highlight,
+      Image,
       Collaboration.configure({
         document: ydoc,
       }),

@@ -96,6 +96,30 @@ const CommandsPlugin = Extension.create({
                   .run();
               },
             },
+            {
+              title: "Image",
+              icon: <Icons.Image />, // Use your chosen icon
+              command: async ({
+                editor,
+                range,
+              }: {
+                editor: Editor;
+                range: Range;
+              }) => {
+                // Prompt the user to enter the image URL
+                const imageUrl = window.prompt("Enter the image URL");
+
+                // Only proceed if the user provided a valid URL
+                if (imageUrl) {
+                  editor
+                    .chain()
+                    .focus()
+                    .deleteRange(range) // Delete the slash menu trigger
+                    .setImage({ src: imageUrl }) // Use the built-in setImage command
+                    .run();
+                }
+              },
+            },
           ]
             .filter((item) =>
               item.title.toLowerCase().startsWith(query.toLowerCase())

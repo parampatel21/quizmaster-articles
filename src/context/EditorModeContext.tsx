@@ -1,5 +1,6 @@
 "use client";
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useEffect } from "react";
+import { getStoredValue, storeValue } from "@/utils/localStorage";
 
 interface EditorModeContextType {
   isInstructor: boolean;
@@ -20,14 +21,36 @@ export const EditorModeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isInstructor, setIsInstructor] = useState(true);
+  const [isInstructor, setIsInstructor] = useState<boolean>(true); // Default to true initially
   const [allMCQsFinalized, setAllMCQsFinalized] = useState(true);
+  const [isMounted, setIsMounted] = useState(false); // Track if component has mounted
+
+  // On mount, retrieve the mode from localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedMode = getStoredValue("isInstructor", true);
+      setIsInstructor(savedMode);
+      setIsMounted(true); // Mark as mounted after setting the state
+    }
+  }, []);
+
+  // Persist mode to localStorage whenever isInstructor changes
+  useEffect(() => {
+    if (typeof window !== "undefined" && isMounted) {
+      storeValue("isInstructor", isInstructor);
+    }
+  }, [isInstructor, isMounted]);
 
   const toggleMode = useCallback(() => {
     if (allMCQsFinalized) {
       setIsInstructor((prev) => !prev);
     }
   }, [allMCQsFinalized]);
+
+  // Render nothing until the component is mounted to avoid hydration errors
+  if (!isMounted) {
+    return null; // You can also return a loader if you want
+  }
 
   return (
     <EditorModeContext.Provider

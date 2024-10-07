@@ -11,11 +11,12 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        customBlue: "#60a5fa", // Add blue-400 as customBlue
       },
     },
   },
   daisyui: {
-    themes: ["garden"],
+    themes: ["garden"], // Use the Garden theme from DaisyUI
   },
   plugins: [require("daisyui")],
 };

@@ -53,7 +53,7 @@ const SubmissionHistory = ({
 
   return (
     <div
-      className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-base-300 border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out ${
+      className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-neutral border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100  ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >

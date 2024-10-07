@@ -15,7 +15,9 @@ import {
   Save,
   CircleHelp,
   CircleCheck,
-  CircleX
+  CircleX,
+  RefreshCcw,
+  Lightbulb,
 } from "lucide-react";
 
 export {
@@ -35,5 +37,7 @@ export {
   Save,
   CircleHelp,
   CircleCheck,
-  CircleX
+  CircleX,
+  RefreshCcw,
+  Lightbulb,
 };

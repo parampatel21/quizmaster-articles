@@ -5,6 +5,7 @@ import * as Icons from "@/components/ui/Icons";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import SubmissionHistory from "@/components/ui/SubmissionHistory";
 import { useMCQSelection } from "@/context/MCQSelectionContext";
+import HintComponent from "@/components/ui/HintComponent";
 
 const MCQComponent = ({
   node,
@@ -32,8 +33,21 @@ const MCQComponent = ({
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const { selectedMCQId, setSelectedMCQId } = useMCQSelection();
-
+  const [showHint, setShowHint] = useState(false);
+  const [showHintButton, setShowHintButton] = useState(
+    node.attrs.showHintButton ?? true
+  );
   const isSelected = selectedMCQId === node.attrs.id;
+  const handleHintButtonClick = () => {
+    console.log(attemptedAnswers);
+    setShowHint((prev) => !prev);
+  };
+
+  const handleShowHintToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newShowHintButton = e.target.checked;
+    setShowHintButton(newShowHintButton);
+    updateAttributes({ showHintButton: newShowHintButton });
+  };
 
   const handleHistoryButtonClick = () => {
     setShowHistory((prev) => !prev);
@@ -291,6 +305,18 @@ const MCQComponent = ({
                 <button onClick={editMCQ} className="btn btn-sm btn-accent">
                   Edit
                 </button>
+                <div className="flex items-center ml-4 px-2 py-2 bg-base-100 rounded-lg">
+                  <label htmlFor="showHintToggle" className="mr-2 text-xs">
+                    Allow AI Hint:
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="showHintToggle"
+                    checked={showHintButton}
+                    onChange={handleShowHintToggle}
+                    className="toggle toggle-xs toggle-base-200"
+                  />
+                </div>
                 <button
                   onClick={handleHistoryButtonClick}
                   className="btn btn-sm btn-neutral ml-auto"
@@ -413,39 +439,83 @@ const MCQComponent = ({
               </li>
             ))}
           </ul>
-          {!isSubmitted ? (
-            <button
-              onClick={handleSubmit}
-              className="btn btn-sm btn-primary"
-              disabled={readerSelectedAnswer === null}
-            >
-              Submit Answer
-            </button>
-          ) : isCorrect ? (
+          <div className="flex justify-between items-center">
             <div>
-              <div className="text-lg font-semibold text-success mb-2">
-                Correct!
-              </div>
-              <button
-                onClick={handleClearSubmission}
-                className="btn btn-sm btn-secondary"
-              >
-                Clear
-              </button>
+              {!isCorrect && isSubmitted ? (
+                <div>
+                  <div className="text-lg font-semibold text-error mb-2">
+                    Incorrect. Try again!
+                  </div>
+                  {/* Use flexbox to align buttons horizontally */}
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={handleSubmit}
+                      className="btn btn-sm btn-primary"
+                      disabled={readerSelectedAnswer === null}
+                    >
+                      Try Again
+                    </button>
+                    {showHintButton && !isCorrect && (
+                      <button
+                        onClick={handleHintButtonClick}
+                        className="btn btn-sm btn-outline btn-secondary flex items-center"
+                      >
+                        <Icons.Lightbulb className="w-4 h-4" />
+                        <span className="pr-1">Hint</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                !isCorrect && (
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={handleSubmit}
+                      className="btn btn-sm btn-primary"
+                      disabled={readerSelectedAnswer === null}
+                    >
+                      Submit Answer
+                    </button>
+                    {showHintButton && !isCorrect && (
+                      <button
+                        onClick={handleHintButtonClick}
+                        className="btn btn-sm btn-outline btn-secondary flex items-center"
+                      >
+                        <Icons.Lightbulb className="w-4 h-4" />
+                        <span className="pr-1">Hint</span>
+                      </button>
+                    )}
+                  </div>
+                )
+              )}
+
+              {isCorrect && (
+                <div>
+                  <div className="text-lg font-semibold text-success mb-2">
+                    Correct!
+                  </div>
+                  <button
+                    onClick={handleClearSubmission}
+                    className="btn btn-sm btn-secondary"
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
             </div>
-          ) : (
-            <div>
-              <div className="text-lg font-semibold text-error mb-2">
-                Incorrect. Try again!
-              </div>
-              <button
-                onClick={handleSubmit}
-                className="btn btn-sm btn-primary"
-                disabled={readerSelectedAnswer === null}
-              >
-                Submit Answer
-              </button>
-            </div>
+          </div>
+
+          {showHint && (
+            <HintComponent
+              mcqId={node.attrs.id}
+              show={showHint}
+              onClose={handleHintButtonClick}
+              question={question}
+              attemptedAnswers={attemptedAnswers.map((index) => answers[index])}
+              remainingAnswers={answers.filter(
+                (_: any, index: number) => !attemptedAnswers.includes(index)
+              )}
+            />
           )}
         </div>
       )}

@@ -17,12 +17,7 @@ interface SubmissionPaneProps {
   question: string;
 }
 
-const SubmissionPane: React.FC<SubmissionPaneProps> = ({
-  mcqId,
-  show,
-  onClose,
-  question,
-}) => {
+const SubmissionPane: React.FC<SubmissionPaneProps> = ({ mcqId, show, onClose, question }) => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -118,11 +113,7 @@ const SubmissionPane: React.FC<SubmissionPaneProps> = ({
                       ? submission.selected_answer.slice(0, 17) + '...'
                       : submission.selected_answer}
                   </td>
-                  <td
-                    className={
-                      submission.is_correct ? 'text-success' : 'text-error'
-                    }
-                  >
+                  <td className={submission.is_correct ? 'text-success' : 'text-error'}>
                     {submission.is_correct ? 'Yes' : 'No'}
                   </td>
                   <td>{new Date(submission.submitted_at).toLocaleString()}</td>

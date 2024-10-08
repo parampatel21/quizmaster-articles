@@ -26,9 +26,7 @@ const SubmissionFeedback: React.FC<SubmissionFeedbackProps> = ({
     <div>
       {isSubmitted && !isCorrect ? (
         <div>
-          <div className="text-lg font-semibold text-error mb-2">
-            Incorrect. Try again!
-          </div>
+          <div className="text-lg font-semibold text-error mb-2">Incorrect. Try again!</div>
           <div className="flex items-center space-x-4">
             <button
               onClick={handleSubmit}
@@ -50,13 +48,8 @@ const SubmissionFeedback: React.FC<SubmissionFeedbackProps> = ({
         </div>
       ) : isCorrect ? (
         <div>
-          <div className="text-lg font-semibold text-success mb-2">
-            Correct!
-          </div>
-          <button
-            onClick={handleClearSubmission}
-            className="btn btn-sm btn-secondary"
-          >
+          <div className="text-lg font-semibold text-success mb-2">Correct!</div>
+          <button onClick={handleClearSubmission} className="btn btn-sm btn-secondary">
             Clear
           </button>
         </div>

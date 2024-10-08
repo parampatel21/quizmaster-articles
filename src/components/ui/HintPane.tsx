@@ -79,10 +79,7 @@ const HintPane: React.FC<HintPaneProps> = ({
       <div className="flex justify-between items-start">
         <h2 className="text-lg font-bold">Smart Hint</h2>
         <div className="flex space-x-2">
-          <button
-            onClick={handleClose}
-            className="text-gray-600 hover:text-gray-800"
-          >
+          <button onClick={handleClose} className="text-gray-600 hover:text-gray-800">
             <Icons.X className="w-6 h-6" />
           </button>
         </div>

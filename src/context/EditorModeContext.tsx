@@ -19,11 +19,7 @@ export const EditorModeContext = createContext<EditorModeContextType>({
   setAllMCQsFinalized: () => {},
 });
 
-export const EditorModeProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const EditorModeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isInstructor, setIsInstructor] = useState<boolean>(true);
   const [allMCQsFinalized, setAllMCQsFinalized] = useState(true);
   const [isMounted, setIsMounted] = useState(false);

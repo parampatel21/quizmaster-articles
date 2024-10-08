@@ -24,9 +24,7 @@ export async function POST(req: Request) {
 
     const prompt = `
       Question: ${question}.
-      The user has selected these incorrect answers: ${attemptedAnswers.join(
-        ', '
-      )}.
+      The user has selected these incorrect answers: ${attemptedAnswers.join(', ')}.
       The remaining answer options are: ${remainingAnswers.join(', ')}.
       Provide a helpful hint to guide the user toward the correct answer, but do not reveal the answer directly.
     `;

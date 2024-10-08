@@ -80,7 +80,7 @@ const BubbleMenu: React.FC<{ editor: Editor }> = ({ editor }) => {
         editor.chain().focus()[format](options).run();
       }
     },
-    [editor]
+    [editor],
   );
 
   return (

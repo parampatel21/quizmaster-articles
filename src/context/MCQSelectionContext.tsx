@@ -7,13 +7,9 @@ interface MCQSelectionContextType {
   setSelectedMCQId: (id: string | null) => void;
 }
 
-const MCQSelectionContext = createContext<MCQSelectionContextType | undefined>(
-  undefined
-);
+const MCQSelectionContext = createContext<MCQSelectionContextType | undefined>(undefined);
 
-export const MCQSelectionProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const MCQSelectionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedMCQId, setSelectedMCQId] = useState<string | null>(null);
 
   return (
@@ -26,9 +22,7 @@ export const MCQSelectionProvider: React.FC<{ children: ReactNode }> = ({
 export const useMCQSelection = () => {
   const context = useContext(MCQSelectionContext);
   if (context === undefined) {
-    throw new Error(
-      'useMCQSelection must be used within a MCQSelectionProvider'
-    );
+    throw new Error('useMCQSelection must be used within a MCQSelectionProvider');
   }
   return context;
 };

@@ -12,18 +12,12 @@ import { validateSubmission } from '@/utils/validation';
 import { MCQSubmission } from '@/types/mcqTypes';
 
 // GET: Retrieve MCQ submissions
-export async function GET(
-  req: Request,
-  { params }: { params: { mcq_id: string } }
-) {
+export async function GET(req: Request, { params }: { params: { mcq_id: string } }) {
   try {
     const submissions = await getSubmissionsByMcqId(params.mcq_id);
 
     if (!submissions.length) {
-      throw new ApiError(
-        `No submissions found for mcq_id: ${params.mcq_id}`,
-        404
-      );
+      throw new ApiError(`No submissions found for mcq_id: ${params.mcq_id}`, 404);
     }
 
     return NextResponse.json({ submissions }, { status: 200 });
@@ -34,10 +28,7 @@ export async function GET(
 }
 
 // DELETE: Delete MCQ submissions
-export async function DELETE(
-  req: Request,
-  { params }: { params: { mcq_id: string } }
-) {
+export async function DELETE(req: Request, { params }: { params: { mcq_id: string } }) {
   try {
     const deletedRows = await deleteSubmissionsByMcqId(params.mcq_id);
 
@@ -47,7 +38,7 @@ export async function DELETE(
           success: true,
           message: `No submissions found for mcq_id: ${params.mcq_id}`,
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -56,7 +47,7 @@ export async function DELETE(
         success: true,
         message: `MCQ submissions deleted for mcq_id: ${params.mcq_id}`,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error('Error deleting MCQ submissions:', error);
@@ -65,10 +56,7 @@ export async function DELETE(
 }
 
 // POST: Submit MCQ answer
-export async function POST(
-  req: Request,
-  { params }: { params: { mcq_id: string } }
-) {
+export async function POST(req: Request, { params }: { params: { mcq_id: string } }) {
   try {
     const data: MCQSubmission = await req.json();
 

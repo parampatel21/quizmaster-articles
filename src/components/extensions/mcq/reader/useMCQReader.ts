@@ -9,9 +9,7 @@ const useMCQReader = (attrs: MCQAttributes) => {
 
   // State Initialization
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [readerSelectedAnswer, setReaderSelectedAnswer] = useState<
-    number | null
-  >(null);
+  const [readerSelectedAnswer, setReaderSelectedAnswer] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [attemptedAnswers, setAttemptedAnswers] = useState<number[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);

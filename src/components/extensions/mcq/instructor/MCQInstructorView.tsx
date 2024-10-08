@@ -6,10 +6,7 @@ import useMCQInstructor from './useMCQInstructor';
 import FinalizedMCQView from './FinalizedMCQView';
 import EditableMCQForm from './EditableMCQForm';
 
-const MCQInstructorView = ({
-  attrs,
-  updateAttributes,
-}: MCQInstructorViewProps) => {
+const MCQInstructorView = ({ attrs, updateAttributes }: MCQInstructorViewProps) => {
   const {
     errorMessage,
     localSelectedAnswer,

@@ -22,7 +22,7 @@ export const deleteMCQFromDatabase = async (mcqId: string): Promise<void> => {
 export const submitMCQAnswer = async (
   mcqId: string,
   selectedAnswerText: string,
-  isCorrect: boolean
+  isCorrect: boolean,
 ): Promise<void> => {
   try {
     const response = await fetch(`/api/mcq/${mcqId}`, {

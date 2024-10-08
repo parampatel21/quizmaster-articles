@@ -17,24 +17,14 @@ const commandItems: CommandItem[] = [
     title: 'Heading 1',
     icon: <Icons.Heading1 />,
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode('heading', { level: 1 })
-        .run();
+      editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run();
     },
   },
   {
     title: 'Heading 2',
     icon: <Icons.Heading2 />,
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode('heading', { level: 2 })
-        .run();
+      editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run();
     },
   },
   {
@@ -67,12 +57,7 @@ const commandItems: CommandItem[] = [
     command: async ({ editor, range }) => {
       const imageUrl = window.prompt('Enter the image URL');
       if (imageUrl) {
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setImage({ src: imageUrl })
-          .run();
+        editor.chain().focus().deleteRange(range).setImage({ src: imageUrl }).run();
       }
     },
   },
@@ -107,9 +92,7 @@ const CommandsPlugin = Extension.create({
         ...this.options.suggestion,
         items: ({ query }: { query: string }): CommandItem[] => {
           return commandItems
-            .filter((item) =>
-              item.title.toLowerCase().startsWith(query.toLowerCase())
-            )
+            .filter((item) => item.title.toLowerCase().startsWith(query.toLowerCase()))
             .slice(0, 10);
         },
         render: () => {

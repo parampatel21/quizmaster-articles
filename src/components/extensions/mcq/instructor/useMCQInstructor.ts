@@ -7,20 +7,16 @@ import { mcqSchema } from '@/utils/validation';
 
 const useMCQInstructor = (
   attrs: MCQAttributes,
-  updateAttributes: (attrs: Partial<MCQAttributes>) => void
+  updateAttributes: (attrs: Partial<MCQAttributes>) => void,
 ) => {
   const { question, answers, selectedAnswer, showHintButton } = attrs;
 
   // State Initialization
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [localSelectedAnswer, setLocalSelectedAnswer] = useState<number | null>(
-    selectedAnswer
-  );
+  const [localSelectedAnswer, setLocalSelectedAnswer] = useState<number | null>(selectedAnswer);
   const newAnswerInputRef = useRef<HTMLInputElement | null>(null);
   const [showHistory, setShowHistory] = useState<boolean>(false);
-  const [localShowHintButton, setLocalShowHintButton] = useState<boolean>(
-    showHintButton ?? true
-  );
+  const [localShowHintButton, setLocalShowHintButton] = useState<boolean>(showHintButton ?? true);
 
   // Effects
   useEffect(() => {
@@ -64,9 +60,7 @@ const useMCQInstructor = (
   };
 
   // Handle toggling the show hint button
-  const handleShowHintToggle = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleShowHintToggle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const newShowHintButton = e.target.checked;
     setLocalShowHintButton(newShowHintButton);
     updateAttributes({ showHintButton: newShowHintButton });

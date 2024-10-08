@@ -75,10 +75,7 @@ const EditableMCQForm: React.FC<EditableMCQFormProps> = ({
       <button onClick={addAnswer} className="btn btn-sm btn-primary">
         Add Answer
       </button>
-      <button
-        onClick={finalizeMCQ}
-        className="btn btn-sm text-white btn-accent"
-      >
+      <button onClick={finalizeMCQ} className="btn btn-sm text-white btn-accent">
         Save
       </button>
     </div>

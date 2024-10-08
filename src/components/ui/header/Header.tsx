@@ -8,8 +8,7 @@ import { CircleHelp } from '@/components/ui/Icons';
 import HelpMenu from './HelpMenu';
 
 const Header: React.FC = () => {
-  const { isInstructor, toggleMode, allMCQsFinalized } =
-    useContext(EditorModeContext);
+  const { isInstructor, toggleMode, allMCQsFinalized } = useContext(EditorModeContext);
   const [isHelpVisible, setIsHelpVisible] = useState(false);
 
   const handleToggle = () => {
@@ -54,9 +53,7 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {isHelpVisible && (
-        <HelpMenu isVisible={isHelpVisible} onClose={toggleHelpMenu} />
-      )}
+      {isHelpVisible && <HelpMenu isVisible={isHelpVisible} onClose={toggleHelpMenu} />}
     </>
   );
 };

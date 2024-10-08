@@ -49,35 +49,30 @@ const HelpMenu: React.FC<HelpMenuProps> = ({ isVisible, onClose }) => {
       </div>
       <div className="overflow-y-auto flex-grow">
         <p className="text-sm text-gray-600 mb-4">
-          This app is designed to help instructors create interactive articles
-          for readers.
+          This app is designed to help instructors create interactive articles for readers.
         </p>
         <ul className="list-disc list-inside text-sm text-gray-600 space-y-2">
           <li>
-            <span className="font-bold">Switch Modes:</span> Use the toggle on
-            the top right to switch between Instructor Mode (for editing) and
-            Reader Mode (for viewing).
+            <span className="font-bold">Switch Modes:</span> Use the toggle on the top right to
+            switch between Instructor Mode (for editing) and Reader Mode (for viewing).
           </li>
           <li>
-            <span className="font-bold">Command Menu:</span> In Instructor Mode,
-            you can add questions, images, headings, and more through the
-            commands menu by typing “/”.
+            <span className="font-bold">Command Menu:</span> In Instructor Mode, you can add
+            questions, images, headings, and more through the commands menu by typing “/”.
           </li>
           <li>
-            <span className="font-bold">Multiple Choice Questions:</span>{' '}
-            Instructors can create MCQs, edit answer choices, and set a correct
-            answer. In Reader Mode, participants can answer questions but not
-            make changes.
+            <span className="font-bold">Multiple Choice Questions:</span> Instructors can create
+            MCQs, edit answer choices, and set a correct answer. In Reader Mode, participants can
+            answer questions but not make changes.
           </li>
           <li>
-            <span className="font-bold">Smart Hint:</span> In Instructor Mode,
-            you can enable the AI-powered Smart Hint option for each question,
-            which provides hints for readers when they get stuck.
+            <span className="font-bold">Smart Hint:</span> In Instructor Mode, you can enable the
+            AI-powered Smart Hint option for each question, which provides hints for readers when
+            they get stuck.
           </li>
           <li>
-            <span className="font-bold">Bubble Menu:</span> Highlighting any
-            text as an instructor will allow you to apply additional styles via
-            a floating menu.
+            <span className="font-bold">Bubble Menu:</span> Highlighting any text as an instructor
+            will allow you to apply additional styles via a floating menu.
           </li>
         </ul>
       </div>

@@ -39,17 +39,13 @@ const MCQReaderView = ({ attrs }: MCQReaderViewProps) => {
               className="radio radio-primary"
               disabled={isSubmitted && attemptedAnswers.includes(index)}
             />
-            <span className="text-base font-medium text-gray-700">
-              {answer}
-            </span>
+            <span className="text-base font-medium text-gray-700">{answer}</span>
             {isSubmitted && isCorrect && index === selectedAnswer && (
               <Icons.CircleCheck className="w-6 h-6 text-success ml-2" />
             )}
-            {isSubmitted &&
-              attemptedAnswers.includes(index) &&
-              index !== selectedAnswer && (
-                <Icons.CircleX className="w-6 h-6 text-error ml-2" />
-              )}
+            {isSubmitted && attemptedAnswers.includes(index) && index !== selectedAnswer && (
+              <Icons.CircleX className="w-6 h-6 text-error ml-2" />
+            )}
           </li>
         ))}
       </ul>
@@ -71,9 +67,7 @@ const MCQReaderView = ({ attrs }: MCQReaderViewProps) => {
           onClose={handleHintButtonClick}
           question={question}
           attemptedAnswers={attemptedAnswers.map((index) => answers[index])}
-          remainingAnswers={answers.filter(
-            (_, index) => !attemptedAnswers.includes(index)
-          )}
+          remainingAnswers={answers.filter((_, index) => !attemptedAnswers.includes(index))}
         />
       )}
     </div>

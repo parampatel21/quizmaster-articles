@@ -40,9 +40,7 @@ const FinalizedMCQView: React.FC<FinalizedMCQViewProps> = ({
               className="radio radio-primary"
               disabled
             />
-            <span className="text-base font-medium text-gray-700">
-              {answer}
-            </span>
+            <span className="text-base font-medium text-gray-700">{answer}</span>
           </li>
         ))}
       </ul>
@@ -62,10 +60,7 @@ const FinalizedMCQView: React.FC<FinalizedMCQViewProps> = ({
             className="toggle toggle-xs toggle-secondary"
           />
         </div>
-        <button
-          onClick={handleHistoryButtonClick}
-          className="btn btn-sm btn-neutral ml-auto"
-        >
+        <button onClick={handleHistoryButtonClick} className="btn btn-sm btn-neutral ml-auto">
           {showHistory ? 'Hide Submission History' : 'Submission History'}
         </button>
       </div>

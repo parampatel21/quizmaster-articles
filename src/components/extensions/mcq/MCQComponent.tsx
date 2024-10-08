@@ -62,12 +62,7 @@ const MCQComponent = (props: NodeViewProps) => {
   }, [isSelected, deleteNode, editor, id, setSelectedMCQId]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (
-      !(
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLButtonElement
-      )
-    ) {
+    if (!(e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement)) {
       e.preventDefault();
       e.stopPropagation();
       setSelectedMCQId(id);
@@ -78,9 +73,7 @@ const MCQComponent = (props: NodeViewProps) => {
   return (
     <NodeViewWrapper
       className={`mcq-wrapper border p-4 rounded-lg select-none ${
-        isSelected && isInstructor
-          ? 'border-success border-2'
-          : 'border-base-300'
+        isSelected && isInstructor ? 'border-success border-2' : 'border-base-300'
       }`}
       contentEditable={false}
       draggable={isInstructor ? 'true' : 'false'}

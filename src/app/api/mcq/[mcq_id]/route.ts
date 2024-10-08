@@ -39,9 +39,12 @@ export async function DELETE(
     const deletedRows = await deleteSubmissionsByMcqId(params.mcq_id);
 
     if (deletedRows === 0) {
-      throw new ApiError(
-        `No submissions found for mcq_id: ${params.mcq_id}`,
-        404
+      return NextResponse.json(
+        {
+          success: true,
+          message: `No submissions found for mcq_id: ${params.mcq_id}`,
+        },
+        { status: 200 }
       );
     }
 

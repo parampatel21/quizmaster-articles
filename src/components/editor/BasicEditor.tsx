@@ -21,7 +21,7 @@ import { HocuspocusProvider } from "@hocuspocus/provider";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { EditorModeContext } from "@/context/EditorModeContext";
-import { MCQNode } from "@/components/extensions/mcq/MCQNode";
+import { MCQNode } from "@/components/extensions/mcq";
 import Gapcursor from "@tiptap/extension-gapcursor";
 import { MCQSelectionProvider } from "@/context/MCQSelectionContext";
 

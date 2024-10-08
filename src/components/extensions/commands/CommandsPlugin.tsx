@@ -6,6 +6,7 @@ import CommandsList from "./CommandsList";
 import { Editor, Range } from "@tiptap/core";
 import * as Icons from "@/components/ui/Icons";
 import { CommandItem } from "@/types";
+import { v4 as uuidv4 } from "uuid";
 
 const commandItems: CommandItem[] = [
   {
@@ -36,7 +37,24 @@ const commandItems: CommandItem[] = [
     title: "MCQ Question",
     icon: <Icons.ListTodo />,
     command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setNode("mcq").run();
+      const uniqueId = uuidv4();
+
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertContentAt(range, {
+          type: "mcq",
+          attrs: {
+            id: uniqueId,
+            question: "",
+            answers: [],
+            isFinalized: false,
+            selectedAnswer: null,
+            showHintButton: true,
+          },
+        })
+        .run();
     },
   },
   {

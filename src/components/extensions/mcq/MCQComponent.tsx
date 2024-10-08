@@ -3,9 +3,9 @@ import { NodeViewWrapper, NodeViewProps } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import { useMCQSelection } from "@/context/MCQSelectionContext";
-import MCQInstructorView from "./MCQInstructorView";
-import MCQReaderView from "./MCQReaderView";
 import { MCQAttributes } from "@/types/mcqTypes";
+import { MCQInstructorView, MCQReaderView } from "./";
+import { deleteMCQFromDatabase } from "@/services/mcqService";
 
 const MCQComponent = (props: NodeViewProps) => {
   const { node, updateAttributes, deleteNode, editor } = props;
@@ -70,22 +70,6 @@ const MCQComponent = (props: NodeViewProps) => {
       e.stopPropagation();
       setSelectedMCQId(id);
       editor?.commands.blur();
-    }
-  };
-
-  const deleteMCQFromDatabase = async (mcqId: string) => {
-    try {
-      const response = await fetch(`api/mcq/${mcqId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete MCQ: ${response.statusText}`);
-      }
-
-      console.log("MCQ deleted successfully");
-    } catch (error) {
-      console.error("Error deleting MCQ:", error);
     }
   };
 

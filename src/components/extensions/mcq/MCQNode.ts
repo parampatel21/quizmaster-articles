@@ -1,34 +1,26 @@
-import { Node, mergeAttributes } from "@tiptap/core";
-import { ReactNodeViewRenderer } from "@tiptap/react";
+// components/extensions/mcq/MCQNode.ts
+
+import { Node } from "@tiptap/core";
 import MCQComponent from "./MCQComponent";
-import { v4 as uuidv4 } from "uuid";
+import { ReactNodeViewRenderer } from "@tiptap/react";
 
 export const MCQNode = Node.create({
   name: "mcq",
+
   group: "block",
-  content: "inline*",
+
+  atom: true,
+
   draggable: true,
 
   addAttributes() {
     return {
-      question: {
-        default: "",
-      },
-      answers: {
-        default: [],
-      },
-      selectedAnswer: {
-        default: null,
-      },
-      isFinalized: {
-        default: false,
-      },
-      id: {
-        default: () => uuidv4(),
-      },
-      showHintButton: {
-        default: true,
-      },
+      id: { default: null },
+      question: { default: "" },
+      answers: { default: [] },
+      isFinalized: { default: false },
+      selectedAnswer: { default: null },
+      showHintButton: { default: true },
     };
   },
 
@@ -37,7 +29,7 @@ export const MCQNode = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["div", mergeAttributes(HTMLAttributes, { "data-type": "mcq" }), 0];
+    return ["div", { "data-type": "mcq", ...HTMLAttributes }];
   },
 
   addNodeView() {

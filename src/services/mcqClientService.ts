@@ -4,16 +4,16 @@
 export const deleteMCQFromDatabase = async (mcqId: string): Promise<void> => {
   try {
     const response = await fetch(`/api/mcq/${mcqId}`, {
-      method: "DELETE",
+      method: 'DELETE',
     });
 
     if (!response.ok) {
       throw new Error(`Failed to delete MCQ: ${response.statusText}`);
     }
 
-    console.log("MCQ deleted successfully");
+    console.log('MCQ deleted successfully');
   } catch (error) {
-    console.error("Error deleting MCQ:", error);
+    console.error('Error deleting MCQ:', error);
     throw error;
   }
 };
@@ -26,9 +26,9 @@ export const submitMCQAnswer = async (
 ): Promise<void> => {
   try {
     const response = await fetch(`/api/mcq/${mcqId}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         selected_answer: selectedAnswerText,
@@ -37,10 +37,10 @@ export const submitMCQAnswer = async (
     });
 
     if (!response.ok) {
-      throw new Error("Failed to submit answer");
+      throw new Error('Failed to submit answer');
     }
   } catch (error) {
-    console.error("Error submitting answer:", error);
+    console.error('Error submitting answer:', error);
     throw error;
   }
 };

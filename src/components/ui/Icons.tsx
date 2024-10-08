@@ -20,7 +20,7 @@ import {
   CircleX,
   RefreshCcw,
   Lightbulb,
-} from "lucide-react";
+} from 'lucide-react';
 
 export {
   Bold,

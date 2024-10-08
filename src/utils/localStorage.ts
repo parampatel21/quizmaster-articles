@@ -2,7 +2,7 @@
 
 // retrieve the state
 export function getStoredValue<T>(key: string, defaultValue: T): T {
-  if (typeof window === "undefined") return defaultValue;
+  if (typeof window === 'undefined') return defaultValue;
 
   const storedValue = localStorage.getItem(key);
   if (storedValue !== null) {
@@ -18,7 +18,7 @@ export function getStoredValue<T>(key: string, defaultValue: T): T {
 
 // set the state
 export function storeValue<T>(key: string, value: T): void {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {

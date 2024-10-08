@@ -1,2 +1,2 @@
-export * from "./mcqTypes";
-export * from "./commandTypes";
+export * from './mcqTypes';
+export * from './commandTypes';

@@ -1,6 +1,6 @@
 // standardized error response from the API
 
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export class ApiError extends Error {
   status: number;

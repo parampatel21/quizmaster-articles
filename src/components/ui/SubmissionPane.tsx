@@ -1,7 +1,7 @@
 // frontend to show the previous submissions for a given MCQ block
 
-import React, { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
 
 type Submission = {
   id: number;
@@ -37,7 +37,7 @@ const SubmissionPane: React.FC<SubmissionPaneProps> = ({
     fetch(`/api/mcq/${mcqId}`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Failed to fetch submissions");
+          throw new Error('Failed to fetch submissions');
         }
         return res.json();
       })
@@ -45,13 +45,13 @@ const SubmissionPane: React.FC<SubmissionPaneProps> = ({
         if (isMounted && data && Array.isArray(data.submissions)) {
           setSubmissions(data.submissions);
         } else {
-          console.error("Unexpected response format:", data);
+          console.error('Unexpected response format:', data);
         }
         setLoading(false); // Loading complete
       })
       .catch((error) => {
         if (isMounted) {
-          console.error("Error fetching submissions:", error);
+          console.error('Error fetching submissions:', error);
           setLoading(false); // Loading complete even on error
         }
       });
@@ -71,7 +71,7 @@ const SubmissionPane: React.FC<SubmissionPaneProps> = ({
   return (
     <div
       className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-neutral border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
-        isVisible ? "opacity-100" : "opacity-0"
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       role="dialog"
       aria-modal="true"
@@ -115,15 +115,15 @@ const SubmissionPane: React.FC<SubmissionPaneProps> = ({
                   <th>{index + 1}</th>
                   <td>
                     {submission.selected_answer.length > 20
-                      ? submission.selected_answer.slice(0, 17) + "..."
+                      ? submission.selected_answer.slice(0, 17) + '...'
                       : submission.selected_answer}
                   </td>
                   <td
                     className={
-                      submission.is_correct ? "text-success" : "text-error"
+                      submission.is_correct ? 'text-success' : 'text-error'
                     }
                   >
-                    {submission.is_correct ? "Yes" : "No"}
+                    {submission.is_correct ? 'Yes' : 'No'}
                   </td>
                   <td>{new Date(submission.submitted_at).toLocaleString()}</td>
                 </tr>

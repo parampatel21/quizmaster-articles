@@ -1,11 +1,11 @@
 // did not decide to abstract this into another page since interactive articles problem scope can be provided within one page
 
-import { BasicEditor } from "@/components/editor/BasicEditor";
-import Header from "@/components/ui/header/Header";
-import { EditorModeProvider } from "@/context/EditorModeContext";
-import { Suspense } from "react";
-import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
-import { SkeletonLoader } from "@/components/ui/SkeletonLoader";
+import { BasicEditor } from '@/components/editor/BasicEditor';
+import Header from '@/components/ui/header/Header';
+import { EditorModeProvider } from '@/context/EditorModeContext';
+import { Suspense } from 'react';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
+import { SkeletonLoader } from '@/components/ui/SkeletonLoader';
 
 export default function Home() {
   return (

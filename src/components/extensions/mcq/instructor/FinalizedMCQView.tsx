@@ -1,7 +1,7 @@
 // displays the finalized mcq view for instructors
 
-import React from "react";
-import SubmissionPane from "@/components/ui/SubmissionPane";
+import React from 'react';
+import SubmissionPane from '@/components/ui/SubmissionPane';
 
 interface FinalizedMCQViewProps {
   question: string;
@@ -66,7 +66,7 @@ const FinalizedMCQView: React.FC<FinalizedMCQViewProps> = ({
           onClick={handleHistoryButtonClick}
           className="btn btn-sm btn-neutral ml-auto"
         >
-          {showHistory ? "Hide Submission History" : "Submission History"}
+          {showHistory ? 'Hide Submission History' : 'Submission History'}
         </button>
       </div>
     </div>

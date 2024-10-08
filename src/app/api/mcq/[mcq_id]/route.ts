@@ -1,15 +1,15 @@
 // get will retrieve submissions, delete will get rid of submissions, post will submit submissions
 // we use zod to validate submissions on the API POST calls
 
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 import {
   getSubmissionsByMcqId,
   insertSubmission,
   deleteSubmissionsByMcqId,
-} from "@/services/mcqAPIDBService";
-import { ApiError, handleError } from "@/utils/apiErrorHandler";
-import { validateSubmission } from "@/utils/validation";
-import { MCQSubmission } from "@/types/mcqTypes";
+} from '@/services/mcqAPIDBService';
+import { ApiError, handleError } from '@/utils/apiErrorHandler';
+import { validateSubmission } from '@/utils/validation';
+import { MCQSubmission } from '@/types/mcqTypes';
 
 // GET: Retrieve MCQ submissions
 export async function GET(
@@ -28,8 +28,8 @@ export async function GET(
 
     return NextResponse.json({ submissions }, { status: 200 });
   } catch (error) {
-    console.error("Error retrieving submissions:", error);
-    return handleError(new ApiError("Failed to retrieve submissions"));
+    console.error('Error retrieving submissions:', error);
+    return handleError(new ApiError('Failed to retrieve submissions'));
   }
 }
 
@@ -59,8 +59,8 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error deleting MCQ submissions:", error);
-    return handleError(new ApiError("Failed to delete MCQ submissions"));
+    console.error('Error deleting MCQ submissions:', error);
+    return handleError(new ApiError('Failed to delete MCQ submissions'));
   }
 }
 
@@ -84,7 +84,7 @@ export async function POST(
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
-    console.error("Error submitting MCQ answer:", error);
-    return handleError(new ApiError("Failed to submit answer"));
+    console.error('Error submitting MCQ answer:', error);
+    return handleError(new ApiError('Failed to submit answer'));
   }
 }

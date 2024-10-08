@@ -2,43 +2,43 @@
 // inspired by: https://vikramthyagarajan.medium.com/how-to-build-a-notion-like-text-editor-in-react-and-tiptap-7f394c36ed9d
 // MCQ actually required some diff method to insert into editor
 
-import { Extension } from "@tiptap/core";
-import Suggestion from "@tiptap/suggestion";
-import { ReactRenderer } from "@tiptap/react";
-import tippy from "tippy.js";
-import CommandsList from "./CommandsList";
-import { Editor, Range } from "@tiptap/core";
-import * as Icons from "@/components/ui/Icons";
-import { CommandItem } from "@/types";
-import { v4 as uuidv4 } from "uuid";
+import { Extension } from '@tiptap/core';
+import Suggestion from '@tiptap/suggestion';
+import { ReactRenderer } from '@tiptap/react';
+import tippy from 'tippy.js';
+import CommandsList from './CommandsList';
+import { Editor, Range } from '@tiptap/core';
+import * as Icons from '@/components/ui/Icons';
+import { CommandItem } from '@/types';
+import { v4 as uuidv4 } from 'uuid';
 
 const commandItems: CommandItem[] = [
   {
-    title: "Heading 1",
+    title: 'Heading 1',
     icon: <Icons.Heading1 />,
     command: ({ editor, range }) => {
       editor
         .chain()
         .focus()
         .deleteRange(range)
-        .setNode("heading", { level: 1 })
+        .setNode('heading', { level: 1 })
         .run();
     },
   },
   {
-    title: "Heading 2",
+    title: 'Heading 2',
     icon: <Icons.Heading2 />,
     command: ({ editor, range }) => {
       editor
         .chain()
         .focus()
         .deleteRange(range)
-        .setNode("heading", { level: 2 })
+        .setNode('heading', { level: 2 })
         .run();
     },
   },
   {
-    title: "MCQ Question",
+    title: 'MCQ Question',
     icon: <Icons.ListTodo />,
     command: ({ editor, range }) => {
       const uniqueId = uuidv4();
@@ -48,10 +48,10 @@ const commandItems: CommandItem[] = [
         .focus()
         .deleteRange(range)
         .insertContentAt(range, {
-          type: "mcq",
+          type: 'mcq',
           attrs: {
             id: uniqueId,
-            question: "",
+            question: '',
             answers: [],
             isFinalized: false,
             selectedAnswer: null,
@@ -62,10 +62,10 @@ const commandItems: CommandItem[] = [
     },
   },
   {
-    title: "Image",
+    title: 'Image',
     icon: <Icons.Image />,
     command: async ({ editor, range }) => {
-      const imageUrl = window.prompt("Enter the image URL");
+      const imageUrl = window.prompt('Enter the image URL');
       if (imageUrl) {
         editor
           .chain()
@@ -79,12 +79,12 @@ const commandItems: CommandItem[] = [
 ];
 
 const CommandsPlugin = Extension.create({
-  name: "commands",
+  name: 'commands',
 
   addOptions() {
     return {
       suggestion: {
-        char: "/",
+        char: '/',
         command: ({
           editor,
           range,
@@ -123,14 +123,14 @@ const CommandsPlugin = Extension.create({
                 editor: props.editor,
               });
 
-              popup = tippy("body", {
+              popup = tippy('body', {
                 getReferenceClientRect: props.clientRect as () => DOMRect,
                 appendTo: () => document.body,
                 content: component.element,
                 showOnCreate: true,
                 interactive: true,
-                trigger: "manual",
-                placement: "bottom-start",
+                trigger: 'manual',
+                placement: 'bottom-start',
               });
             },
             onUpdate(props) {

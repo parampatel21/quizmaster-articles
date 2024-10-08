@@ -1,9 +1,9 @@
 // custom hook for managing mcq logic in instructor mode
 
-import { useState, useRef, useEffect } from "react";
-import { MCQAttributes } from "@/types/mcqTypes";
-import { z } from "zod";
-import { mcqSchema } from "@/utils/validation";
+import { useState, useRef, useEffect } from 'react';
+import { MCQAttributes } from '@/types/mcqTypes';
+import { z } from 'zod';
+import { mcqSchema } from '@/utils/validation';
 
 const useMCQInstructor = (
   attrs: MCQAttributes,
@@ -38,7 +38,7 @@ const useMCQInstructor = (
 
   // Add a new answer
   const addAnswer = (): void => {
-    updateAttributes({ answers: [...answers, ""] });
+    updateAttributes({ answers: [...answers, ''] });
     setTimeout(() => {
       newAnswerInputRef.current?.focus();
     }, 0);
@@ -97,7 +97,7 @@ const useMCQInstructor = (
       if (error instanceof z.ZodError) {
         setErrorMessage(error.errors[0].message);
       } else {
-        setErrorMessage("An unexpected error occurred.");
+        setErrorMessage('An unexpected error occurred.');
       }
       return false;
     }

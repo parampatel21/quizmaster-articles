@@ -1,7 +1,7 @@
 // some static text explaining how to use the app
 
-import React, { useState, useEffect } from "react";
-import { X } from "@/components/ui/Icons";
+import React, { useState, useEffect } from 'react';
+import { X } from '@/components/ui/Icons';
 
 interface HelpMenuProps {
   isVisible: boolean;
@@ -29,7 +29,7 @@ const HelpMenu: React.FC<HelpMenuProps> = ({ isVisible, onClose }) => {
   return (
     <div
       className={`fixed top-16 left-3 w-1/4 h-auto max-h-[70vh] border-dashed border-blue-400 border-2 shadow-lg z-50 pb-4 px-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
-        isMenuVisible ? "opacity-100" : "opacity-0"
+        isMenuVisible ? 'opacity-100' : 'opacity-0'
       }`}
       role="dialog"
       aria-modal="true"
@@ -64,7 +64,7 @@ const HelpMenu: React.FC<HelpMenuProps> = ({ isVisible, onClose }) => {
             commands menu by typing “/”.
           </li>
           <li>
-            <span className="font-bold">Multiple Choice Questions:</span>{" "}
+            <span className="font-bold">Multiple Choice Questions:</span>{' '}
             Instructors can create MCQs, edit answer choices, and set a correct
             answer. In Reader Mode, participants can answer questions but not
             make changes.

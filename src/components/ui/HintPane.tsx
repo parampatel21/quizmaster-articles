@@ -1,7 +1,7 @@
 // frontend for AI generated hint
 
-import React, { useEffect, useState } from "react";
-import * as Icons from "@/components/ui/Icons";
+import React, { useEffect, useState } from 'react';
+import * as Icons from '@/components/ui/Icons';
 
 interface HintPaneProps {
   mcqId: string;
@@ -19,7 +19,7 @@ const HintPane: React.FC<HintPaneProps> = ({
   attemptedAnswers,
   remainingAnswers,
 }) => {
-  const [hint, setHint] = useState<string>("");
+  const [hint, setHint] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -31,9 +31,9 @@ const HintPane: React.FC<HintPaneProps> = ({
     setLoading(true);
 
     fetch(`/api/mcq/hint`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         question,
@@ -50,7 +50,7 @@ const HintPane: React.FC<HintPaneProps> = ({
       })
       .catch((error) => {
         if (isMounted) {
-          console.error("Error fetching hint:", error);
+          console.error('Error fetching hint:', error);
           setLoading(false);
         }
       });
@@ -70,7 +70,7 @@ const HintPane: React.FC<HintPaneProps> = ({
   return (
     <div
       className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-secondary border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
-        isVisible ? "opacity-100" : "opacity-0"
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       role="dialog"
       aria-modal="true"

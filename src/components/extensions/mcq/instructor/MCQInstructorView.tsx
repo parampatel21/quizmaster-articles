@@ -1,10 +1,10 @@
 // main component for the instructor's mcq interface
 
-import React from "react";
-import { MCQInstructorViewProps } from "@/types/mcqTypes";
-import useMCQInstructor from "./useMCQInstructor";
-import FinalizedMCQView from "./FinalizedMCQView";
-import EditableMCQForm from "./EditableMCQForm";
+import React from 'react';
+import { MCQInstructorViewProps } from '@/types/mcqTypes';
+import useMCQInstructor from './useMCQInstructor';
+import FinalizedMCQView from './FinalizedMCQView';
+import EditableMCQForm from './EditableMCQForm';
 
 const MCQInstructorView = ({
   attrs,

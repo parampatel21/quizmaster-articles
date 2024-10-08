@@ -1,13 +1,13 @@
 // renders the mcq component within the editor
 
-import React, { useEffect, useContext } from "react";
-import { NodeViewWrapper, NodeViewProps } from "@tiptap/react";
-import * as Icons from "@/components/ui/Icons";
-import { EditorModeContext } from "@/context/EditorModeContext";
-import { useMCQSelection } from "@/context/MCQSelectionContext";
-import { MCQAttributes } from "@/types/mcqTypes";
-import { MCQInstructorView, MCQReaderView } from "./";
-import { deleteMCQFromDatabase } from "@/services/mcqClientService";
+import React, { useEffect, useContext } from 'react';
+import { NodeViewWrapper, NodeViewProps } from '@tiptap/react';
+import * as Icons from '@/components/ui/Icons';
+import { EditorModeContext } from '@/context/EditorModeContext';
+import { useMCQSelection } from '@/context/MCQSelectionContext';
+import { MCQAttributes } from '@/types/mcqTypes';
+import { MCQInstructorView, MCQReaderView } from './';
+import { deleteMCQFromDatabase } from '@/services/mcqClientService';
 
 const MCQComponent = (props: NodeViewProps) => {
   const { node, updateAttributes, deleteNode, editor } = props;
@@ -26,7 +26,7 @@ const MCQComponent = (props: NodeViewProps) => {
       const target = e.target as HTMLElement | null;
       if (
         isSelected &&
-        ["Delete", "Backspace"].includes(e.key) &&
+        ['Delete', 'Backspace'].includes(e.key) &&
         !(target instanceof HTMLInputElement)
       ) {
         e.preventDefault();
@@ -38,7 +38,7 @@ const MCQComponent = (props: NodeViewProps) => {
         editor?.commands.focus();
       } else if (
         isSelected &&
-        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
+        ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
       ) {
         setSelectedMCQId(null);
         editor?.commands.focus();
@@ -46,18 +46,18 @@ const MCQComponent = (props: NodeViewProps) => {
     };
 
     const handleClickOutside = (e: MouseEvent) => {
-      if (!(e.target as HTMLElement).closest(".mcq-wrapper")) {
+      if (!(e.target as HTMLElement).closest('.mcq-wrapper')) {
         setSelectedMCQId(null);
         editor?.commands.focus();
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isSelected, deleteNode, editor, id, setSelectedMCQId]);
 
@@ -79,11 +79,11 @@ const MCQComponent = (props: NodeViewProps) => {
     <NodeViewWrapper
       className={`mcq-wrapper border p-4 rounded-lg select-none ${
         isSelected && isInstructor
-          ? "border-success border-2"
-          : "border-base-300"
+          ? 'border-success border-2'
+          : 'border-base-300'
       }`}
       contentEditable={false}
-      draggable={isInstructor ? "true" : "false"}
+      draggable={isInstructor ? 'true' : 'false'}
       onClick={isInstructor ? handleClick : undefined}
     >
       <div className="p-2 bg-base-200 rounded-md shadow mb-4 flex items-center gap-2">

@@ -1,12 +1,12 @@
 // main component for the reader's mcq interface
 
-import React from "react";
-import * as Icons from "@/components/ui/Icons";
-import useMCQReader from "./useMCQReader";
-import HintPane from "@/components/ui/HintPane";
-import { ErrorMessage } from "../shared";
-import SubmissionFeedback from "./SubmissionFeedback";
-import { MCQReaderViewProps } from "@/types/mcqTypes";
+import React from 'react';
+import * as Icons from '@/components/ui/Icons';
+import useMCQReader from './useMCQReader';
+import HintPane from '@/components/ui/HintPane';
+import { ErrorMessage } from '../shared';
+import SubmissionFeedback from './SubmissionFeedback';
+import { MCQReaderViewProps } from '@/types/mcqTypes';
 
 const MCQReaderView = ({ attrs }: MCQReaderViewProps) => {
   const { question, answers, selectedAnswer, id, showHintButton } = attrs;

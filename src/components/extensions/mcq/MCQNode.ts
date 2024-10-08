@@ -1,13 +1,13 @@
 // defines the mcq node extension for tiptap editor
 
-import { Node } from "@tiptap/core";
-import MCQComponent from "./MCQComponent";
-import { ReactNodeViewRenderer } from "@tiptap/react";
+import { Node } from '@tiptap/core';
+import MCQComponent from './MCQComponent';
+import { ReactNodeViewRenderer } from '@tiptap/react';
 
 export const MCQNode = Node.create({
-  name: "mcq",
+  name: 'mcq',
 
-  group: "block",
+  group: 'block',
 
   atom: true,
 
@@ -16,7 +16,7 @@ export const MCQNode = Node.create({
   addAttributes() {
     return {
       id: { default: null },
-      question: { default: "" },
+      question: { default: '' },
       answers: { default: [] },
       isFinalized: { default: false },
       selectedAnswer: { default: null },
@@ -29,7 +29,7 @@ export const MCQNode = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["div", { "data-type": "mcq", ...HTMLAttributes }];
+    return ['div', { 'data-type': 'mcq', ...HTMLAttributes }];
   },
 
   addNodeView() {

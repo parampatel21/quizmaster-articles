@@ -1,13 +1,13 @@
 // helper functions for API services
 
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
-import { MCQSubmission } from "@/types/mcqTypes";
+import { open } from 'sqlite';
+import sqlite3 from 'sqlite3';
+import { MCQSubmission } from '@/types/mcqTypes';
 
 // open the database
 async function openDb() {
   return open({
-    filename: "./db/db.sqlite",
+    filename: './db/db.sqlite',
     driver: sqlite3.Database,
   });
 }
@@ -19,7 +19,7 @@ export async function getSubmissionsByMcqId(
   const db = await openDb();
   try {
     const submissions = await db.all(
-      "SELECT * FROM mcq_submissions WHERE mcq_id = ?",
+      'SELECT * FROM mcq_submissions WHERE mcq_id = ?',
       [mcq_id]
     );
     return submissions;
@@ -37,7 +37,7 @@ export async function insertSubmission(
   const db = await openDb();
   try {
     await db.run(
-      "INSERT INTO mcq_submissions (mcq_id, selected_answer, is_correct) VALUES (?, ?, ?)",
+      'INSERT INTO mcq_submissions (mcq_id, selected_answer, is_correct) VALUES (?, ?, ?)',
       [mcq_id, selected_answer, is_correct]
     );
   } finally {
@@ -52,7 +52,7 @@ export async function deleteSubmissionsByMcqId(
   const db = await openDb();
   try {
     const result = await db.run(
-      "DELETE FROM mcq_submissions WHERE mcq_id = ?",
+      'DELETE FROM mcq_submissions WHERE mcq_id = ?',
       [mcq_id]
     );
     return result?.changes ?? 0;

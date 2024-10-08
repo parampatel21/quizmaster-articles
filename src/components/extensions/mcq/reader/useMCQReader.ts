@@ -1,8 +1,8 @@
 // custom hook for managing mcq logic in reader mode
 
-import { useState } from "react";
-import { MCQAttributes } from "@/types/mcqTypes";
-import { submitMCQAnswer } from "@/services/mcqClientService";
+import { useState } from 'react';
+import { MCQAttributes } from '@/types/mcqTypes';
+import { submitMCQAnswer } from '@/services/mcqClientService';
 
 const useMCQReader = (attrs: MCQAttributes) => {
   const { answers, selectedAnswer, id } = attrs;
@@ -38,7 +38,7 @@ const useMCQReader = (attrs: MCQAttributes) => {
       try {
         await submitMCQAnswer(id, selectedAnswerText, isCorrectAnswer);
       } catch {
-        setErrorMessage("Failed to submit your answer. Please try again.");
+        setErrorMessage('Failed to submit your answer. Please try again.');
       }
     }
   };

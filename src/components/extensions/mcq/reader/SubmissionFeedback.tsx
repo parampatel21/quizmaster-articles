@@ -1,7 +1,7 @@
 // displays feedback after mcq submission in reader mode
 
-import React from "react";
-import * as Icons from "@/components/ui/Icons";
+import React from 'react';
+import * as Icons from '@/components/ui/Icons';
 
 interface SubmissionFeedbackProps {
   isCorrect: boolean;

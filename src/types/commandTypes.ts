@@ -1,7 +1,7 @@
 // a type I abstracted out for command menu
 
-import { Editor, Range } from "@tiptap/core";
-import { ReactNode } from "react";
+import { Editor, Range } from '@tiptap/core';
+import { ReactNode } from 'react';
 
 export interface CommandItem {
   title: string;

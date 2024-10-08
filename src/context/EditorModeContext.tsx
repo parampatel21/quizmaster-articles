@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 // tracks the reader v. instructor mode
 
-import { createContext, useState, useCallback, useEffect } from "react";
-import { getStoredValue, storeValue } from "@/utils/localStorage";
+import { createContext, useState, useCallback, useEffect } from 'react';
+import { getStoredValue, storeValue } from '@/utils/localStorage';
 
 interface EditorModeContextType {
   isInstructor: boolean;
@@ -30,8 +30,8 @@ export const EditorModeProvider = ({
 
   // locally save the state of isInstructor such that when we reload it does not reset
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedMode = getStoredValue("isInstructor", true);
+    if (typeof window !== 'undefined') {
+      const savedMode = getStoredValue('isInstructor', true);
       setIsInstructor(savedMode);
       setIsMounted(true);
     }
@@ -39,8 +39,8 @@ export const EditorModeProvider = ({
 
   // persist to local storage on change
   useEffect(() => {
-    if (typeof window !== "undefined" && isMounted) {
-      storeValue("isInstructor", isInstructor);
+    if (typeof window !== 'undefined' && isMounted) {
+      storeValue('isInstructor', isInstructor);
     }
   }, [isInstructor, isMounted]);
 

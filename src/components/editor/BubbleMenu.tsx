@@ -1,8 +1,8 @@
 // the Bubble Menu appears when you highlight some text in Instructor mode
 
-import React, { useCallback } from "react";
-import { BubbleMenu as TipTapBubbleMenu, Editor } from "@tiptap/react";
-import * as Icons from "../ui/Icons";
+import React, { useCallback } from 'react';
+import { BubbleMenu as TipTapBubbleMenu, Editor } from '@tiptap/react';
+import * as Icons from '../ui/Icons';
 
 type ButtonProps = {
   label: string;
@@ -11,13 +11,13 @@ type ButtonProps = {
 };
 
 type FormatCommand =
-  | "toggleBold"
-  | "toggleUnderline"
-  | "toggleItalic"
-  | "toggleStrike"
-  | "toggleCodeBlock"
-  | "toggleHeading"
-  | "toggleHighlight";
+  | 'toggleBold'
+  | 'toggleUnderline'
+  | 'toggleItalic'
+  | 'toggleStrike'
+  | 'toggleCodeBlock'
+  | 'toggleHeading'
+  | 'toggleHighlight';
 
 const FormatButton: React.FC<ButtonProps> = ({ icon, onClick }) => (
   <button
@@ -30,46 +30,46 @@ const FormatButton: React.FC<ButtonProps> = ({ icon, onClick }) => (
 
 const buttons = [
   {
-    label: "Bold",
+    label: 'Bold',
     icon: <Icons.Bold />,
-    format: "toggleBold" as FormatCommand,
+    format: 'toggleBold' as FormatCommand,
   },
   {
-    label: "Underline",
+    label: 'Underline',
     icon: <Icons.Underline />,
-    format: "toggleUnderline" as FormatCommand,
+    format: 'toggleUnderline' as FormatCommand,
   },
   {
-    label: "Italic",
+    label: 'Italic',
     icon: <Icons.Italic />,
-    format: "toggleItalic" as FormatCommand,
+    format: 'toggleItalic' as FormatCommand,
   },
   {
-    label: "Strike",
+    label: 'Strike',
     icon: <Icons.Strikethrough />,
-    format: "toggleStrike" as FormatCommand,
+    format: 'toggleStrike' as FormatCommand,
   },
   {
-    label: "Code",
+    label: 'Code',
     icon: <Icons.Code />,
-    format: "toggleCodeBlock" as FormatCommand,
+    format: 'toggleCodeBlock' as FormatCommand,
   },
   {
-    label: "Heading1",
+    label: 'Heading1',
     icon: <Icons.Heading1 />,
-    format: "toggleHeading" as FormatCommand,
+    format: 'toggleHeading' as FormatCommand,
     options: { level: 1 },
   },
   {
-    label: "Heading2",
+    label: 'Heading2',
     icon: <Icons.Heading2 />,
-    format: "toggleHeading" as FormatCommand,
+    format: 'toggleHeading' as FormatCommand,
     options: { level: 2 },
   },
   {
-    label: "Highlighter",
+    label: 'Highlighter',
     icon: <Icons.Highlighter />,
-    format: "toggleHighlight" as FormatCommand,
+    format: 'toggleHighlight' as FormatCommand,
   },
 ];
 

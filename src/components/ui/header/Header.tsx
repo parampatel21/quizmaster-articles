@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 // toolbar at top of screen
 
-import React, { useContext, useState } from "react";
-import { EditorModeContext } from "@/context/EditorModeContext";
-import { CircleHelp } from "@/components/ui/Icons";
-import HelpMenu from "./HelpMenu";
+import React, { useContext, useState } from 'react';
+import { EditorModeContext } from '@/context/EditorModeContext';
+import { CircleHelp } from '@/components/ui/Icons';
+import HelpMenu from './HelpMenu';
 
 const Header: React.FC = () => {
   const { isInstructor, toggleMode, allMCQsFinalized } =
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
         <div className="flex-1"></div>
         <div className="flex items-center space-x-2">
           <span className="text-sm font-medium">
-            {isInstructor ? "Instructor Mode" : "Reader Mode"}
+            {isInstructor ? 'Instructor Mode' : 'Reader Mode'}
           </span>
           <div>
             <label className="label cursor-pointer">

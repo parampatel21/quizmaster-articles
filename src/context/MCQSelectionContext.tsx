@@ -1,6 +1,6 @@
 // had to implement this because multiple MCQ blocks were getting selected
 
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 interface MCQSelectionContextType {
   selectedMCQId: string | null;
@@ -27,7 +27,7 @@ export const useMCQSelection = () => {
   const context = useContext(MCQSelectionContext);
   if (context === undefined) {
     throw new Error(
-      "useMCQSelection must be used within a MCQSelectionProvider"
+      'useMCQSelection must be used within a MCQSelectionProvider'
     );
   }
   return context;

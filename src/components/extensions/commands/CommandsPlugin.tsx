@@ -1,3 +1,7 @@
+// under the hood of the Commands Menu plugin I made
+// inspired by: https://vikramthyagarajan.medium.com/how-to-build-a-notion-like-text-editor-in-react-and-tiptap-7f394c36ed9d
+// MCQ actually required some diff method to insert into editor
+
 import { Extension } from "@tiptap/core";
 import Suggestion from "@tiptap/suggestion";
 import { ReactRenderer } from "@tiptap/react";

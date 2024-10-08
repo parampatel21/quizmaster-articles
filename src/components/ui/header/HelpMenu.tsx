@@ -1,3 +1,5 @@
+// some static text explaining how to use the app
+
 import React, { useState, useEffect } from "react";
 import { X } from "@/components/ui/Icons";
 

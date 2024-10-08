@@ -1,3 +1,5 @@
+// custom hook for managing mcq logic in instructor mode
+
 import { useState, useRef, useEffect } from "react";
 import { MCQAttributes } from "@/types/mcqTypes";
 import { z } from "zod";

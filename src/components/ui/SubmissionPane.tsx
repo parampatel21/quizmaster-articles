@@ -1,3 +1,5 @@
+// frontend to show the previous submissions for a given MCQ block
+
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 

@@ -1,8 +1,10 @@
+// helper functions for API services
+
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
 import { MCQSubmission } from "@/types/mcqTypes";
 
-// Open the database
+// open the database
 async function openDb() {
   return open({
     filename: "./db/db.sqlite",
@@ -10,7 +12,7 @@ async function openDb() {
   });
 }
 
-// Retrieve all submissions for a specific MCQ
+// retrieve all submissions for a specific MCQ
 export async function getSubmissionsByMcqId(
   mcq_id: string
 ): Promise<MCQSubmission[]> {
@@ -26,7 +28,7 @@ export async function getSubmissionsByMcqId(
   }
 }
 
-// Insert a new submission for a specific MCQ
+// insert a new submission for a specific MCQ
 export async function insertSubmission(
   mcq_id: string,
   selected_answer: string,
@@ -43,7 +45,7 @@ export async function insertSubmission(
   }
 }
 
-// Delete all submissions for a specific MCQ
+// delete all submissions for a specific MCQ
 export async function deleteSubmissionsByMcqId(
   mcq_id: string
 ): Promise<number> {
@@ -53,9 +55,7 @@ export async function deleteSubmissionsByMcqId(
       "DELETE FROM mcq_submissions WHERE mcq_id = ?",
       [mcq_id]
     );
-
-    // Safely handle the case where result.changes might be undefined
-    return result?.changes ?? 0; // If result.changes is undefined, return 0
+    return result?.changes ?? 0;
   } finally {
     await db.close();
   }

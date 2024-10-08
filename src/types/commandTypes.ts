@@ -1,3 +1,5 @@
+// a type I abstracted out for command menu
+
 import { Editor, Range } from "@tiptap/core";
 import { ReactNode } from "react";
 

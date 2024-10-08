@@ -1,3 +1,6 @@
+// get will retrieve submissions, delete will get rid of submissions, post will submit submissions
+// we use zod to validate submissions on the API POST calls
+
 import { NextResponse } from "next/server";
 import {
   getSubmissionsByMcqId,
@@ -69,7 +72,7 @@ export async function POST(
   try {
     const data: MCQSubmission = await req.json();
 
-    // Zod validation
+    // Zod validation, see validation.ts
     const validation = validateSubmission(data);
     if (!validation.success) {
       throw new ApiError(validation.error.message, 400);

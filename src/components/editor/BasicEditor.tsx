@@ -1,4 +1,8 @@
 "use client";
+
+// main entry point for TipTap, the extensions below are all integrated with the editor
+// I had to create the command menu ("/") and and the MCQ node (obviously) from scratch
+
 import React, { useContext } from "react";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
@@ -24,6 +28,10 @@ import { EditorModeContext } from "@/context/EditorModeContext";
 import { MCQNode } from "@/components/extensions/mcq";
 import Gapcursor from "@tiptap/extension-gapcursor";
 import { MCQSelectionProvider } from "@/context/MCQSelectionContext";
+
+// hocuspocus allows me to asynchronously save the document so I don't even have to worry about that mess
+// see: https://tiptap.dev/docs/hocuspocus/server/extensions#sq-lite
+// this is usually meant for collaboration like Google Docs, but this is a good repurpose :)
 
 const ydoc = new Y.Doc();
 

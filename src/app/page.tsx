@@ -1,3 +1,5 @@
+// did not decide to abstract this into another page since interactive articles problem scope can be provided within one page
+
 import { BasicEditor } from "@/components/editor/BasicEditor";
 import Header from "@/components/ui/header/Header";
 import { EditorModeProvider } from "@/context/EditorModeContext";

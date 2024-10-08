@@ -1,4 +1,7 @@
 "use client";
+
+// toolbar at top of screen
+
 import React, { useContext, useState } from "react";
 import { EditorModeContext } from "@/context/EditorModeContext";
 import { CircleHelp } from "@/components/ui/Icons";

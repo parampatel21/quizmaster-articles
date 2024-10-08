@@ -1,3 +1,5 @@
+// the Bubble Menu appears when you highlight some text in Instructor mode
+
 import React, { useCallback } from "react";
 import { BubbleMenu as TipTapBubbleMenu, Editor } from "@tiptap/react";
 import * as Icons from "../ui/Icons";

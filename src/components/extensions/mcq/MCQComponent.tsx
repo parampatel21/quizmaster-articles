@@ -1,3 +1,5 @@
+// renders the mcq component within the editor
+
 import React, { useEffect, useContext } from "react";
 import { NodeViewWrapper, NodeViewProps } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";

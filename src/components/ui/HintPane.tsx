@@ -1,3 +1,5 @@
+// frontend for AI generated hint
+
 import React, { useEffect, useState } from "react";
 import * as Icons from "@/components/ui/Icons";
 
@@ -11,7 +13,6 @@ interface HintPaneProps {
 }
 
 const HintPane: React.FC<HintPaneProps> = ({
-  mcqId,
   show,
   onClose,
   question,

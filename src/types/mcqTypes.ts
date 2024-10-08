@@ -1,3 +1,6 @@
+// extracted types from the MCQ conglomerate
+// the first two are for the API, the last 3 are from the frontend code
+
 export interface MCQSubmission {
   mcq_id: string;
   selected_answer: string;

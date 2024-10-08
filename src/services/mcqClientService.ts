@@ -1,3 +1,6 @@
+// helper functions for frontend, makes the API calls
+
+// when an MCQ block is deleted
 export const deleteMCQFromDatabase = async (mcqId: string): Promise<void> => {
   try {
     const response = await fetch(`/api/mcq/${mcqId}`, {
@@ -15,6 +18,7 @@ export const deleteMCQFromDatabase = async (mcqId: string): Promise<void> => {
   }
 };
 
+// when we want to submit an MCQ question
 export const submitMCQAnswer = async (
   mcqId: string,
   selectedAnswerText: string,

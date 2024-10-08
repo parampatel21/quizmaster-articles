@@ -1,4 +1,7 @@
 "use client";
+
+// error fallback ui in case its real bad
+
 import { Component, ReactNode, ErrorInfo } from "react";
 
 interface ErrorBoundaryProps {

@@ -1,4 +1,4 @@
-// components/extensions/mcq/shared/ErrorMessage.tsx
+// displays error messages in mcq components
 
 import React from "react";
 import * as Icons from "@/components/ui/Icons";

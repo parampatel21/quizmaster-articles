@@ -1,3 +1,5 @@
+// provides the editable form for instructors to create mcqs
+
 import React from "react";
 import * as Icons from "@/components/ui/Icons";
 import { ErrorMessage } from "../shared";

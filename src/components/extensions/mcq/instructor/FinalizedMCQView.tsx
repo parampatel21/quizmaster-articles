@@ -1,3 +1,5 @@
+// displays the finalized mcq view for instructors
+
 import React from "react";
 import SubmissionPane from "@/components/ui/SubmissionPane";
 

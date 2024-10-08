@@ -1,4 +1,4 @@
-// components/extensions/mcq/MCQNode.ts
+// defines the mcq node extension for tiptap editor
 
 import { Node } from "@tiptap/core";
 import MCQComponent from "./MCQComponent";

@@ -1,4 +1,7 @@
 "use client";
+
+// tracks the reader v. instructor mode
+
 import { createContext, useState, useCallback, useEffect } from "react";
 import { getStoredValue, storeValue } from "@/utils/localStorage";
 

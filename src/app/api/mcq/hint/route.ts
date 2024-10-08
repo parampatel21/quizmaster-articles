@@ -1,3 +1,5 @@
+// makes requests to Google for the hints
+
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ApiError, handleError } from "@/utils/apiErrorHandler";
@@ -32,10 +34,10 @@ export async function POST(req: Request) {
     const model = gemini.getGenerativeModel({
       model: "gemini-1.5-flash",
       generationConfig: {
-        candidateCount: 1,
-        stopSequences: ["\n\nHuman:"],
-        maxOutputTokens: 150,
-        temperature: 0.5,
+        candidateCount: 1, // number of responses
+        stopSequences: ["\n\nHuman:"], // structuring the prompt
+        maxOutputTokens: 150, // response len.
+        temperature: 0.5, // randomness
       },
     });
 

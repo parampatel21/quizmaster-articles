@@ -1,4 +1,4 @@
-// components/extensions/mcq/reader/useMCQReader.ts
+// custom hook for managing mcq logic in reader mode
 
 import { useState } from "react";
 import { MCQAttributes } from "@/types/mcqTypes";

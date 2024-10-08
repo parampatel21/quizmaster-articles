@@ -1,4 +1,4 @@
-// components/extensions/mcq/instructor/MCQInstructorView.tsx
+// main component for the instructor's mcq interface
 
 import React from "react";
 import { MCQInstructorViewProps } from "@/types/mcqTypes";

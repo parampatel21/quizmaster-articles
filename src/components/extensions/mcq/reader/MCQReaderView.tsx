@@ -1,4 +1,4 @@
-// components/extensions/mcq/reader/MCQReaderView.tsx
+// main component for the reader's mcq interface
 
 import React from "react";
 import * as Icons from "@/components/ui/Icons";

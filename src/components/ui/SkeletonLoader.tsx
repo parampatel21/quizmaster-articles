@@ -1,3 +1,5 @@
+// suspense UI
+
 export function SkeletonLoader() {
   return (
     <div className="flex w-52 flex-col gap-4">

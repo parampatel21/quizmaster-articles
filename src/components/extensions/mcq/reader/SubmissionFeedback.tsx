@@ -1,4 +1,4 @@
-// components/extensions/mcq/reader/SubmissionFeedback.tsx
+// displays feedback after mcq submission in reader mode
 
 import React from "react";
 import * as Icons from "@/components/ui/Icons";

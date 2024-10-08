@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { X, RefreshCcw } from "lucide-react";
+import { X } from "lucide-react";
 
 const HintComponent = ({
-  mcqId,
   show,
   onClose,
   question,
@@ -67,10 +66,6 @@ const HintComponent = ({
     setTimeout(onClose, 300);
   };
 
-  const handleRefresh = () => {
-    fetchHint();
-  };
-
   if (!shouldRender) return null;
 
   return (
@@ -80,14 +75,8 @@ const HintComponent = ({
       }`}
     >
       <div className="flex justify-between items-start">
-        <h2 className="text-lg font-bold">Hint</h2>
+        <h2 className="text-lg font-bold">Smart Hint</h2>
         <div className="flex space-x-2">
-          <button
-            onClick={handleRefresh}
-            className="text-gray-600 hover:text-gray-800"
-          >
-            <RefreshCcw className="w-5 h-5" />
-          </button>
           <button
             onClick={handleClose}
             className="text-gray-600 hover:text-gray-800"

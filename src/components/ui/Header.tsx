@@ -58,15 +58,14 @@ const Header: React.FC = () => {
       {/* Help Menu with transition */}
       {showHelp && (
         <div
-          className={`fixed top-16 left-3 w-1/4 h-auto max-h-[50vh] border-dashed border-blue-400 border-2 shadow-lg z-50 pb-4 px-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
+          className={`fixed top-16 left-3 w-1/4 h-auto max-h-[70vh] border-dashed border-blue-400 border-2 shadow-lg z-50 pb-4 px-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-bold leading-none">
               How to use this app:
-            </h2>{" "}
-            {/* Ensure "Help" is vertically centered */}
+            </h2>
             <button
               onClick={toggleHelp}
               className="text-gray-600 hover:text-gray-800"
@@ -76,19 +75,35 @@ const Header: React.FC = () => {
           </div>
           <div className="overflow-y-auto flex-grow">
             <p className="text-sm text-gray-600 mb-4">
-              This app allows instructors to create interactive content using
-              blocks such as MCQ questions. You can switch between Instructor
-              Mode and Reader Mode using the toggle switch on the right.
+              This app is designed to help instructors create interactive
+              articles for readers.
             </p>
             <ul className="list-disc list-inside text-sm text-gray-600">
-              <li>To add a new question, use the commands menu (type "/").</li>
-              <li>You can insert images, headings, and more using the menu.</li>
               <li>
-                Reader Mode allows participants to interact with MCQ questions
-                but not edit them.
+                <span className="font-bold">Switch Modes:</span> Use the toggle
+                on the top right to switch between Instructor Mode (for editing)
+                and Reader Mode (for viewing).
               </li>
               <li>
-                Instructor Mode enables full editing and content creation.
+                <span className="font-bold">Command Menu:</span> In Instructor
+                Mode, you can add questions, images, headings, and more through
+                the commands menu by typing “/”.
+              </li>
+              <li>
+                <span className="font-bold">Multiple Choice Questions:</span>{" "}
+                Instructors can create MCQs, edit answer choices, and set a
+                correct answer. In Reader Mode, participants can answer
+                questions but not make changes.
+              </li>
+              <li>
+                <span className="font-bold">Smart Hint:</span> In Instructor
+                Mode, you can enable the AI-powered Smart Hint option for each
+                question, which provides hints for readers when they get stuck.
+              </li>
+              <li>
+                <span className="font-bold">Bubble Menu:</span> Highlighting any
+                text as an instructor will allow you to apply additional styles
+                via a floating menu.
               </li>
             </ul>
           </div>

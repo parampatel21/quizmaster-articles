@@ -71,12 +71,6 @@ const MCQComponent = ({
     };
   }, [isSelected, deleteNode, editor]);
 
-  useEffect(() => {
-    if (newAnswerInputRef.current) {
-      newAnswerInputRef.current.focus();
-    }
-  }, [answers]);
-
   const handleKeyDown = async (e: KeyboardEvent) => {
     const target = e.target as HTMLElement | null;
     if (
@@ -302,12 +296,15 @@ const MCQComponent = ({
                 ))}
               </ul>
               <div className="flex justify-between items-center mt-4">
-                <button onClick={editMCQ} className="btn btn-sm btn-accent">
+                <button
+                  onClick={editMCQ}
+                  className="btn btn-sm text-white btn-accent"
+                >
                   Edit
                 </button>
-                <div className="flex items-center ml-4 px-2 py-2 bg-base-100 rounded-lg">
+                <div className="flex items-center ml-4 px-2 py-2 bg-base-100 border border-base-100 rounded-lg">
                   <label htmlFor="showHintToggle" className="mr-2 text-xs">
-                    Allow AI Hint:
+                    Allow Smart Hint:
                   </label>
                   <input
                     type="checkbox"
@@ -387,7 +384,7 @@ const MCQComponent = ({
                   />
                   <input
                     type="text"
-                    value=""
+                    value={answers[0] || ""}
                     onChange={(e) => handleInputChange(0, e.target.value)}
                     placeholder="Answer 1"
                     className="input input-bordered w-full"
@@ -398,7 +395,10 @@ const MCQComponent = ({
                 <button onClick={addAnswer} className="btn btn-sm btn-primary">
                   Add Answer
                 </button>
-                <button onClick={finalizeMCQ} className="btn btn-sm btn-accent">
+                <button
+                  onClick={finalizeMCQ}
+                  className="btn btn-sm text-white btn-accent"
+                >
                   Save
                 </button>
               </div>
@@ -461,7 +461,7 @@ const MCQComponent = ({
                         className="btn btn-sm btn-outline btn-secondary flex items-center"
                       >
                         <Icons.Lightbulb className="w-4 h-4" />
-                        <span className="pr-1">Hint</span>
+                        <span className="pr-1">Smart Hint</span>
                       </button>
                     )}
                   </div>
@@ -482,7 +482,7 @@ const MCQComponent = ({
                         className="btn btn-sm btn-outline btn-secondary flex items-center"
                       >
                         <Icons.Lightbulb className="w-4 h-4" />
-                        <span className="pr-1">Hint</span>
+                        <span className="pr-1">Smart Hint</span>
                       </button>
                     )}
                   </div>

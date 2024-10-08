@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { ApiError, handleError } from "@/utils/apiErrorHandler";
+import { MCQHintRequest } from "@/types/mcqTypes";
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -10,7 +12,13 @@ const gemini = new GoogleGenerativeAI(apiKey);
 
 export async function POST(req: Request) {
   try {
-    const { question, attemptedAnswers, remainingAnswers } = await req.json();
+    const data: MCQHintRequest = await req.json();
+
+    const { question, attemptedAnswers, remainingAnswers } = data;
+
+    if (!question || !attemptedAnswers || !remainingAnswers) {
+      throw new ApiError("Invalid input data", 400);
+    }
 
     const prompt = `
       Question: ${question}.
@@ -34,12 +42,9 @@ export async function POST(req: Request) {
     const result = await model.generateContent(prompt);
     const hint = result.response.text().trim();
 
-    return NextResponse.json({ hint });
+    return NextResponse.json({ hint }, { status: 200 });
   } catch (error) {
     console.error("Error generating AI hint:", error);
-    return NextResponse.json(
-      { error: "Failed to generate AI hint" },
-      { status: 500 }
-    );
+    return handleError(new ApiError("Failed to generate AI hint"));
   }
 }

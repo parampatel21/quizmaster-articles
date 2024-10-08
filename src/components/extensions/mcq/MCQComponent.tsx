@@ -3,9 +3,9 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
 import * as Icons from "@/components/ui/Icons";
 import { EditorModeContext } from "@/context/EditorModeContext";
-import SubmissionHistory from "@/components/ui/SubmissionHistory";
+import SubmissionPane from "@/components/ui/SubmissionPane";
 import { useMCQSelection } from "@/context/MCQSelectionContext";
-import HintComponent from "@/components/ui/HintComponent";
+import HintPane from "@/components/ui/HintPane";
 
 const MCQComponent = ({
   node,
@@ -124,11 +124,10 @@ const MCQComponent = ({
       setIsCorrect(isCorrect);
 
       try {
-        const response = await fetch("/api/mcq/submit", {
+        const response = await fetch(`/api/mcq/${node.attrs.id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            mcq_id: node.attrs.id,
             selected_answer: selectedAnswerText,
             is_correct: isCorrect,
           }),
@@ -197,7 +196,7 @@ const MCQComponent = ({
       return false;
     }
     if (answers.length === 0 || answers.some((a: string) => !a.trim())) {
-      setErrorMessage("All answers must be filled in.");
+      setErrorMessage("An answer must be filled in.");
       return false;
     }
     if (localSelectedAnswer === null) {
@@ -275,7 +274,7 @@ const MCQComponent = ({
         isFinalized ? (
           <>
             <div className="p-4 rounded-md shadow bg-base-200">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 {question}
               </h2>
               <ul className="my-2">
@@ -302,7 +301,7 @@ const MCQComponent = ({
                 >
                   Edit
                 </button>
-                <div className="flex items-center ml-4 px-2 py-2 bg-base-100 border border-base-100 rounded-lg">
+                <div className="flex items-center ml-4 px-2 py-2 bg-base-100 border border-base-200 rounded-lg">
                   <label htmlFor="showHintToggle" className="mr-2 text-xs">
                     Allow Smart Hint:
                   </label>
@@ -311,7 +310,7 @@ const MCQComponent = ({
                     id="showHintToggle"
                     checked={showHintButton}
                     onChange={handleShowHintToggle}
-                    className="toggle toggle-xs toggle-base-200"
+                    className="toggle toggle-xs toggle-secondary"
                   />
                 </div>
                 <button
@@ -323,7 +322,7 @@ const MCQComponent = ({
               </div>
             </div>
             {showHistory && (
-              <SubmissionHistory
+              <SubmissionPane
                 mcqId={node.attrs.id}
                 show={showHistory}
                 onClose={handleHistoryButtonClick}
@@ -375,20 +374,8 @@ const MCQComponent = ({
                 </div>
               ))}
               {answers.length === 0 && (
-                <div className="flex items-center gap-2 mb-2">
-                  <input
-                    type="radio"
-                    name="mcq"
-                    className="radio radio-primary"
-                    disabled
-                  />
-                  <input
-                    type="text"
-                    value={answers[0] || ""}
-                    onChange={(e) => handleInputChange(0, e.target.value)}
-                    placeholder="Answer 1"
-                    className="input input-bordered w-full"
-                  />
+                <div className="text-sm text-gray-500 text-center mt-1">
+                  To get started, click the &apos;Add Answer&apos; button.
                 </div>
               )}
               <div className="flex justify-between items-center mt-4">
@@ -407,7 +394,7 @@ const MCQComponent = ({
         )
       ) : (
         <div className="p-4 rounded-md shadow bg-base-200">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">{question}</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">{question}</h2>
           {errorMessage && (
             <div role="alert" className="alert alert-error mb-4">
               <Icons.CircleX />
@@ -506,7 +493,7 @@ const MCQComponent = ({
           </div>
 
           {showHint && (
-            <HintComponent
+            <HintPane
               mcqId={node.attrs.id}
               show={showHint}
               onClose={handleHintButtonClick}

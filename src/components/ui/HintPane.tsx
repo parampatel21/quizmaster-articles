@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { X } from "lucide-react";
 
-const HintComponent = ({
+const HintPane = ({
   show,
   onClose,
   question,
@@ -22,7 +22,7 @@ const HintComponent = ({
 
   const fetchHint = useCallback(() => {
     setLoading(true);
-    fetch(`/api/hint`, {
+    fetch(`/api/mcq/hint`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,4 +97,4 @@ const HintComponent = ({
   );
 };
 
-export default HintComponent;
+export default HintPane;

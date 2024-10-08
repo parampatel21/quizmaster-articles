@@ -8,7 +8,7 @@ type Submission = {
   submitted_at: string;
 };
 
-const SubmissionHistory = ({
+const SubmissionPane = ({
   mcqId,
   show,
   onClose,
@@ -27,9 +27,19 @@ const SubmissionHistory = ({
     if (show) {
       setShouldRender(true);
       setTimeout(() => setIsVisible(true), 50);
+
       // Fetch submission history from the API
       fetch(`/api/mcq/${mcqId}`)
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 404) {
+            console.log(`No submissions found for mcq_id: ${mcqId}`);
+            return { submissions: [] };
+          }
+          if (!res.ok) {
+            throw new Error("Unexpected response status");
+          }
+          return res.json();
+        })
         .then((data) => {
           if (data && Array.isArray(data.submissions)) {
             setSubmissions(data.submissions);
@@ -37,7 +47,9 @@ const SubmissionHistory = ({
             console.error("Unexpected response format:", data);
           }
         })
-        .catch((error) => console.error("Error fetching submissions:", error));
+        .catch((error) => {
+          console.error("Error fetching submissions:", error);
+        });
     } else {
       setIsVisible(false);
       setTimeout(() => setShouldRender(false), 300); // Match this with the transition duration
@@ -107,4 +119,4 @@ const SubmissionHistory = ({
   );
 };
 
-export default SubmissionHistory;
+export default SubmissionPane;

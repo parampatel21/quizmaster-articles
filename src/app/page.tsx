@@ -1,17 +1,24 @@
 import { BasicEditor } from "@/components/editor/BasicEditor";
 import Header from "@/components/ui/Header";
-import { EditorModeProvider } from "@/context/EditorModeContext"; // Wrap with Provider
+import { EditorModeProvider } from "@/context/EditorModeContext";
+import { Suspense } from "react";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { SkeletonLoader } from "@/components/ui/SkeletonLoader";
 
 export default function Home() {
   return (
     <EditorModeProvider>
       <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex justify-center flex-1 mt-12 overflow-y-auto">
-          <div className="w-1/2 p-6 h-full">
-            <BasicEditor />
+        <Suspense fallback={<SkeletonLoader />}>
+          <div className="flex justify-center flex-1 mt-12 overflow-y-auto">
+            <div className="w-1/2 p-6 h-full">
+              <ErrorBoundary>
+                <BasicEditor />
+              </ErrorBoundary>
+            </div>
           </div>
-        </div>
+        </Suspense>
       </div>
     </EditorModeProvider>
   );

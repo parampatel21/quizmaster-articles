@@ -1,17 +1,60 @@
 import { Extension } from "@tiptap/core";
-import Suggestion, { SuggestionProps } from "@tiptap/suggestion";
+import Suggestion from "@tiptap/suggestion";
 import { ReactRenderer } from "@tiptap/react";
-import tippy, { Instance } from "tippy.js";
+import tippy from "tippy.js";
 import CommandsList from "./CommandsList";
-import { Editor } from "@tiptap/react";
-import { Range } from "@tiptap/core";
-import * as Icons from "@/components/ui/Icons"; // Import your icons
+import { Editor, Range } from "@tiptap/core";
+import * as Icons from "@/components/ui/Icons";
+import { CommandItem } from "@/types";
 
-export interface CommandItem {
-  title: string;
-  icon: JSX.Element; // Include the icon in the CommandItem interface
-  command: (props: { editor: Editor; range: Range }) => void;
-}
+const commandItems: CommandItem[] = [
+  {
+    title: "Heading 1",
+    icon: <Icons.Heading1 />,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 1 })
+        .run();
+    },
+  },
+  {
+    title: "Heading 2",
+    icon: <Icons.Heading2 />,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 2 })
+        .run();
+    },
+  },
+  {
+    title: "MCQ Question",
+    icon: <Icons.ListTodo />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).setNode("mcq").run();
+    },
+  },
+  {
+    title: "Image",
+    icon: <Icons.Image />,
+    command: async ({ editor, range }) => {
+      const imageUrl = window.prompt("Enter the image URL");
+      if (imageUrl) {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setImage({ src: imageUrl })
+          .run();
+      }
+    },
+  },
+];
 
 const CommandsPlugin = Extension.create({
   name: "commands",
@@ -41,126 +84,41 @@ const CommandsPlugin = Extension.create({
         editor: this.editor,
         ...this.options.suggestion,
         items: ({ query }: { query: string }): CommandItem[] => {
-          return [
-            {
-              title: "Heading 1",
-              icon: <Icons.Heading1 />, // Use the H1 icon
-              command: ({
-                editor,
-                range,
-              }: {
-                editor: Editor;
-                range: Range;
-              }) => {
-                editor
-                  .chain()
-                  .focus()
-                  .deleteRange(range)
-                  .setNode("heading", { level: 1 })
-                  .run();
-              },
-            },
-            {
-              title: "Heading 2",
-              icon: <Icons.Heading2 />, // Use the H2 icon
-              command: ({
-                editor,
-                range,
-              }: {
-                editor: Editor;
-                range: Range;
-              }) => {
-                editor
-                  .chain()
-                  .focus()
-                  .deleteRange(range)
-                  .setNode("heading", { level: 2 })
-                  .run();
-              },
-            },
-            {
-              title: "MCQ Question",
-              icon: <Icons.ListTodo />, // Use your chosen icon
-              command: ({
-                editor,
-                range,
-              }: {
-                editor: Editor;
-                range: Range;
-              }) => {
-                editor
-                  .chain()
-                  .focus()
-                  .deleteRange(range) // Delete the slash menu trigger
-                  .setNode("mcq") // Insert the MCQ block node
-                  .run();
-              },
-            },
-            {
-              title: "Image",
-              icon: <Icons.Image />, // Use your chosen icon
-              command: async ({
-                editor,
-                range,
-              }: {
-                editor: Editor;
-                range: Range;
-              }) => {
-                // Prompt the user to enter the image URL
-                const imageUrl = window.prompt("Enter the image URL");
-
-                // Only proceed if the user provided a valid URL
-                if (imageUrl) {
-                  editor
-                    .chain()
-                    .focus()
-                    .deleteRange(range) // Delete the slash menu trigger
-                    .setImage({ src: imageUrl }) // Use the built-in setImage command
-                    .run();
-                }
-              },
-            },
-          ]
+          return commandItems
             .filter((item) =>
               item.title.toLowerCase().startsWith(query.toLowerCase())
             )
             .slice(0, 10);
         },
-
         render: () => {
           let component: ReactRenderer;
-          let popup: Instance[];
+          let popup: ReturnType<typeof tippy>;
 
           return {
-            onStart: (props: SuggestionProps<CommandItem>) => {
+            onStart: (props) => {
               component = new ReactRenderer(CommandsList, {
                 props,
                 editor: props.editor,
               });
 
-              if (props.clientRect) {
-                popup = tippy("body", {
-                  getReferenceClientRect: props.clientRect as () => DOMRect,
-                  appendTo: () => document.body,
-                  content: component.element,
-                  showOnCreate: true,
-                  interactive: true,
-                  trigger: "manual",
-                  placement: "bottom-start",
-                });
-              }
+              popup = tippy("body", {
+                getReferenceClientRect: props.clientRect as () => DOMRect,
+                appendTo: () => document.body,
+                content: component.element,
+                showOnCreate: true,
+                interactive: true,
+                trigger: "manual",
+                placement: "bottom-start",
+              });
             },
-            onUpdate(props: SuggestionProps<CommandItem>) {
+            onUpdate(props) {
               component.updateProps(props);
-
-              if (props.clientRect && popup) {
-                popup[0].setProps({
-                  getReferenceClientRect: props.clientRect as () => DOMRect,
-                });
-              }
+              popup[0]?.setProps({
+                getReferenceClientRect: props.clientRect as () => DOMRect,
+              });
             },
             onExit() {
-              popup?.[0]?.destroy();
+              popup[0]?.destroy();
               component.destroy();
             },
           };

@@ -1,27 +1,34 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import * as Icons from "@/components/ui/Icons";
 
-const HintPane = ({
-  show,
-  onClose,
-  question,
-  attemptedAnswers,
-  remainingAnswers,
-}: {
+interface HintPaneProps {
   mcqId: string;
   show: boolean;
   onClose: () => void;
   question: string;
   attemptedAnswers: string[];
   remainingAnswers: string[];
+}
+
+const HintPane: React.FC<HintPaneProps> = ({
+  mcqId,
+  show,
+  onClose,
+  question,
+  attemptedAnswers,
+  remainingAnswers,
 }) => {
   const [hint, setHint] = useState<string>("");
-  const [isVisible, setIsVisible] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const fetchHint = useCallback(() => {
+  useEffect(() => {
+    if (!show) return;
+
+    let isMounted = true;
+    setIsVisible(true);
     setLoading(true);
+
     fetch(`/api/mcq/hint`, {
       method: "POST",
       headers: {
@@ -35,44 +42,38 @@ const HintPane = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.hint) {
+        if (isMounted && data && data.hint) {
           setHint(data.hint);
-        } else {
-          console.error("Unexpected response format:", data);
         }
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching hint:", error);
-        setLoading(false);
+        if (isMounted) {
+          console.error("Error fetching hint:", error);
+          setLoading(false);
+        }
       });
-  }, [question, attemptedAnswers, remainingAnswers]);
 
-  useEffect(() => {
-    if (show) {
-      setShouldRender(true);
-      setTimeout(() => setIsVisible(true), 50);
-      if (!hint) {
-        fetchHint();
-      }
-    } else {
-      setIsVisible(false);
-      setTimeout(() => setShouldRender(false), 300);
-    }
-  }, [show, fetchHint, hint]);
+    return () => {
+      isMounted = false;
+    };
+  }, [question, attemptedAnswers, remainingAnswers, show]);
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(onClose, 300);
+    onClose();
   };
 
-  if (!shouldRender) return null;
+  if (!show) return null;
 
   return (
     <div
       className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-secondary border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="hint-pane-title"
     >
       <div className="flex justify-between items-start">
         <h2 className="text-lg font-bold">Smart Hint</h2>
@@ -81,7 +82,7 @@ const HintPane = ({
             onClick={handleClose}
             className="text-gray-600 hover:text-gray-800"
           >
-            <X className="w-6 h-6" />
+            <Icons.X className="w-6 h-6" />
           </button>
         </div>
       </div>

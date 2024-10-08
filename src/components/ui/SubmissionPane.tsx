@@ -8,79 +8,94 @@ type Submission = {
   submitted_at: string;
 };
 
-const SubmissionPane = ({
-  mcqId,
-  show,
-  onClose,
-  question,
-}: {
+interface SubmissionPaneProps {
   mcqId: string;
   show: boolean;
   onClose: () => void;
   question: string;
+}
+
+const SubmissionPane: React.FC<SubmissionPaneProps> = ({
+  mcqId,
+  show,
+  onClose,
+  question,
 }) => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [isVisible, setIsVisible] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (show) {
-      setShouldRender(true);
-      setTimeout(() => setIsVisible(true), 50);
+    if (!show) return;
 
-      // Fetch submission history from the API
-      fetch(`/api/mcq/${mcqId}`)
-        .then((res) => {
-          if (res.status === 404) {
-            console.log(`No submissions found for mcq_id: ${mcqId}`);
-            return { submissions: [] };
-          }
-          if (!res.ok) {
-            throw new Error("Unexpected response status");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          if (data && Array.isArray(data.submissions)) {
-            setSubmissions(data.submissions);
-          } else {
-            console.error("Unexpected response format:", data);
-          }
-        })
-        .catch((error) => {
+    let isMounted = true;
+    setIsVisible(true);
+    setLoading(true); // Start loading
+
+    fetch(`/api/mcq/${mcqId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch submissions");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (isMounted && data && Array.isArray(data.submissions)) {
+          setSubmissions(data.submissions);
+        } else {
+          console.error("Unexpected response format:", data);
+        }
+        setLoading(false); // Loading complete
+      })
+      .catch((error) => {
+        if (isMounted) {
           console.error("Error fetching submissions:", error);
-        });
-    } else {
-      setIsVisible(false);
-      setTimeout(() => setShouldRender(false), 300); // Match this with the transition duration
-    }
-  }, [show, mcqId]);
+          setLoading(false); // Loading complete even on error
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [mcqId, show]);
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(onClose, 300); // Match this with the transition duration
+    onClose();
   };
 
-  if (!shouldRender) return null;
+  if (!show) return null;
 
   return (
     <div
-      className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-neutral border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100  ${
+      className={`fixed top-16 right-3 w-1/4 h-auto max-h-[50vh] border-dashed border-neutral border-2 shadow-lg z-50 p-4 rounded-md flex flex-col transition-opacity duration-300 ease-in-out bg-base-100 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="submission-pane-title"
     >
       <div className="flex justify-between items-start">
-        <h2 className="text-lg font-bold">Submission History</h2>
+        <h2 id="submission-pane-title" className="text-lg font-bold">
+          Submission History
+        </h2>
         <button
           onClick={handleClose}
           className="text-gray-600 hover:text-gray-800"
+          aria-label="Close Submission Pane"
         >
           <X className="w-6 h-6" />
         </button>
       </div>
       <h3 className="text-sm font-semibold text-gray-600 mb-5">{question}</h3>
       <div className="overflow-y-auto flex-grow">
-        {submissions.length === 0 ? (
+        {loading ? (
+          <div className="space-y-2 animate-pulse">
+            <div className="h-6 w-full bg-gray-300 rounded mb-2"></div>
+            <div className="h-6 w-full bg-gray-300 rounded mb-2"></div>
+            <div className="h-6 w-full bg-gray-300 rounded mb-2"></div>
+          </div>
+        ) : submissions.length === 0 ? (
           <p className="text-center text-gray-500">No submissions available.</p>
         ) : (
           <table className="table w-full table-xs">

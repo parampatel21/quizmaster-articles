@@ -1,5 +1,5 @@
 import { BasicEditor } from "@/components/editor/BasicEditor";
-import Header from "@/components/ui/Header";
+import Header from "@/components/ui/header/Header";
 import { EditorModeProvider } from "@/context/EditorModeContext";
 import { Suspense } from "react";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";

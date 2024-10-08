@@ -1,5 +1,3 @@
-// services/mcqService.ts
-
 export const deleteMCQFromDatabase = async (mcqId: string): Promise<void> => {
   try {
     const response = await fetch(`/api/mcq/${mcqId}`, {

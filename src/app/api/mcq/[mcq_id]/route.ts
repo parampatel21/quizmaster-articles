@@ -3,7 +3,7 @@ import {
   getSubmissionsByMcqId,
   insertSubmission,
   deleteSubmissionsByMcqId,
-} from "@/services/mcqDBService";
+} from "@/services/mcqAPIDBService";
 import { ApiError, handleError } from "@/utils/apiErrorHandler";
 import { validateSubmission } from "@/utils/validation";
 import { MCQSubmission } from "@/types/mcqTypes";

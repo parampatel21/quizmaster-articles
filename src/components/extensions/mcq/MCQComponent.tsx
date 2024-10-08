@@ -5,7 +5,7 @@ import { EditorModeContext } from "@/context/EditorModeContext";
 import { useMCQSelection } from "@/context/MCQSelectionContext";
 import { MCQAttributes } from "@/types/mcqTypes";
 import { MCQInstructorView, MCQReaderView } from "./";
-import { deleteMCQFromDatabase } from "@/services/mcqService";
+import { deleteMCQFromDatabase } from "@/services/mcqClientService";
 
 const MCQComponent = (props: NodeViewProps) => {
   const { node, updateAttributes, deleteNode, editor } = props;

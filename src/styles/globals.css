@@ -21,11 +21,10 @@
     margin-top: 0;
   }
 
-  /* TODO: come back and check if its necessary */
   img {
     display: block;
     height: auto;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
     max-width: 100%;
 
     &.ProseMirror-selectednode {
@@ -53,18 +52,6 @@
     padding: 0;
     white-space: pre-wrap;
     line-height: 1.5;
-  }
-
-  /* TODO: come back and check what's really relevant here */
-  img {
-    display: block;
-    height: auto;
-    margin: 1.5rem 0;
-    max-width: 100%;
-
-    &.ProseMirror-selectednode {
-      outline: 3px solid var(--purple);
-    }
   }
 }
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MCQAttributes } from "@/types/mcqTypes";
-import { submitMCQAnswer } from "@/services/mcqService";
+import { submitMCQAnswer } from "@/services/mcqClientService";
 
 const useMCQReader = (attrs: MCQAttributes) => {
   const { answers, selectedAnswer, id } = attrs;

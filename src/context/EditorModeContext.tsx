@@ -10,7 +10,7 @@ interface EditorModeContextType {
 }
 
 export const EditorModeContext = createContext<EditorModeContextType>({
-  isInstructor: true, // default to instructor mode
+  isInstructor: true,
   toggleMode: () => {},
   allMCQsFinalized: true,
   setAllMCQsFinalized: () => {},
@@ -21,20 +21,20 @@ export const EditorModeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isInstructor, setIsInstructor] = useState<boolean>(true); // Default to true initially
+  const [isInstructor, setIsInstructor] = useState<boolean>(true);
   const [allMCQsFinalized, setAllMCQsFinalized] = useState(true);
-  const [isMounted, setIsMounted] = useState(false); // Track if component has mounted
+  const [isMounted, setIsMounted] = useState(false);
 
-  // On mount, retrieve the mode from localStorage
+  // locally save the state of isInstructor such that when we reload it does not reset
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedMode = getStoredValue("isInstructor", true);
       setIsInstructor(savedMode);
-      setIsMounted(true); // Mark as mounted after setting the state
+      setIsMounted(true);
     }
   }, []);
 
-  // Persist mode to localStorage whenever isInstructor changes
+  // persist to local storage on change
   useEffect(() => {
     if (typeof window !== "undefined" && isMounted) {
       storeValue("isInstructor", isInstructor);
@@ -47,9 +47,8 @@ export const EditorModeProvider = ({
     }
   }, [allMCQsFinalized]);
 
-  // Render nothing until the component is mounted to avoid hydration errors
   if (!isMounted) {
-    return null; // You can also return a loader if you want
+    return null;
   }
 
   return (

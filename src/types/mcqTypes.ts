@@ -9,3 +9,21 @@ export interface MCQHintRequest {
   attemptedAnswers: string[];
   remainingAnswers: string[];
 }
+
+export interface MCQAttributes {
+  question: string;
+  answers: string[];
+  selectedAnswer: number | null;
+  isFinalized: boolean;
+  id: string;
+  showHintButton?: boolean;
+}
+
+export interface MCQInstructorViewProps {
+  attrs: MCQAttributes;
+  updateAttributes: (attrs: Partial<MCQAttributes>) => void;
+}
+
+export interface MCQReaderViewProps {
+  attrs: MCQAttributes;
+}

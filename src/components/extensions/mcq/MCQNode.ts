@@ -26,11 +26,14 @@ export const MCQNode = Node.create({
       id: {
         default: () => uuidv4(),
       },
+      showHintButton: {
+        default: true,
+      },
     };
   },
 
   parseHTML() {
-    return [{ tag: "mcq" }];
+    return [{ tag: "div[data-type='mcq']" }];
   },
 
   renderHTML({ HTMLAttributes }) {

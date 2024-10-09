@@ -4,7 +4,7 @@ Hello Uplimit team!
 
 My name is Param, and I'm excited to share with you my solution for the Interactive Articles assignment. I've built an application using Next.js, TypeScript, Tailwind CSS (with Daisy UI), TipTap editor, and SQLite for data persistence.
 
-I hope you enjoy exploring it!
+I hope you enjoy exploring it.
 
 ## Table of Contents
 
@@ -77,6 +77,8 @@ Once the application is running, open your browser and navigate to http://localh
      - I have two tables
        - **past_submissions**: stores any submissions that are made in Reader mode (columns: mcq_id, selected_answer, is_correct, submitted_at...)
        - **documents**: for TipTap editor async saving, made by default
+    - Locally persisted toggle state, seperate from other persistence
+      - see localStorage.ts
 
 3. **Error Handling and User Feedback:**
 
@@ -98,13 +100,13 @@ Once the application is running, open your browser and navigate to http://localh
 6. **State Management and Context:**
 
    - Utilized React's Context API to manage global state, such as the instructor/reader mode toggle.
-     Implemented custom hooks to encapsulate logic and state management for MCQs, improving code reusability and separation of concerns.
+   - Implemented custom hooks to encapsulate logic and state management for MCQs, improving code reusability and separation of concerns.
 
 ## Future Improvements
 
 A list of possible next steps or improvements:
 
-- Implement dedicated MCQ table that keeps track of all MCQ blocks as a whole.
+- Implement a dedicated MCQ table that keeps track of all MCQ blocks as a whole.
 - Address the issue where the dropcursor does not work with the MCQ node to improve the editing experience and usability.
 - Integrate additional TipTap editor extensions to provide a more holistic editor
 - Enhance MCQ blocks to support multiple correct answer choices

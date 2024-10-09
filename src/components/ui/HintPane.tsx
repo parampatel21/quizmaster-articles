@@ -1,6 +1,6 @@
 // frontend for AI generated hint
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import * as Icons from '@/components/ui/Icons';
 
 interface HintPaneProps {
@@ -22,43 +22,42 @@ const HintPane: React.FC<HintPaneProps> = ({
   const [hint, setHint] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [hasLoadedHint, setHasLoadedHint] = useState(false);
+
+  const fetchHint = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/mcq/hint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          question,
+          attemptedAnswers,
+          remainingAnswers,
+        }),
+      });
+      const data = await response.json();
+      if (data && data.hint) {
+        setHint(data.hint);
+        setHasLoadedHint(true);
+      }
+    } catch (error) {
+      console.error('Error fetching hint:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [question, attemptedAnswers, remainingAnswers]);
 
   useEffect(() => {
-    if (!show) return;
-
-    let isMounted = true;
-    setIsVisible(true);
-    setLoading(true);
-
-    fetch(`/api/mcq/hint`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        question,
-        attemptedAnswers,
-        remainingAnswers,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (isMounted && data && data.hint) {
-          setHint(data.hint);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        if (isMounted) {
-          console.error('Error fetching hint:', error);
-          setLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [question, attemptedAnswers, remainingAnswers, show]);
+    if (show && !hasLoadedHint) {
+      setIsVisible(true);
+      fetchHint();
+    } else if (show) {
+      setIsVisible(true);
+    }
+  }, [show, hasLoadedHint, fetchHint]);
 
   const handleClose = () => {
     setIsVisible(false);

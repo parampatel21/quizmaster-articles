@@ -16,7 +16,7 @@ Feel free to explore the features and functionality of QuizMaster.
 
 Getting started is straightforward.
 
-In `.env.local`, set the `GEMINI_API_KEY` variable to a valid API key.
+Create an `.env.local` in the root dir, set the `GEMINI_API_KEY` variable to a valid API key.
 
 - You can get one here:
   https://aistudio.google.com

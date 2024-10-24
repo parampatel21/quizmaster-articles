@@ -4,6 +4,13 @@ Welcome to **QuizMaster**! This project is an interactive article editor with qu
 
 Feel free to explore the features and functionality of QuizMaster.
 
+## Some Cool Snippets :)
+<img width="500" alt="image" class="display: block;" src="https://github.com/user-attachments/assets/04e123cd-d233-4a5c-95e7-3649606ecb6d">
+<img width="500" alt="image" class="display: block;" src="https://github.com/user-attachments/assets/0b70d9bc-3a72-4aaf-b0d0-1579898b6ef2">
+<img width="500" alt="image" class="display: block;" src="https://github.com/user-attachments/assets/b44059f2-aea8-4b7a-aea8-2932655c8098">
+<img width="500" alt="image" class="display: block;" src="https://github.com/user-attachments/assets/ba1294f7-250e-4c9b-95f7-9ed47f7edcfb">
+
+
 ## Table of Contents
 
 - [Setup](#setup)
